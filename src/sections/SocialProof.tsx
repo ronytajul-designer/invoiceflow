@@ -21,9 +21,9 @@ const logoFor: Record<string, string> = {"Northwind": "Northwind Studio", "Halcy
 
 function Wordmark({ m }: { m: Mark }) {
   return (
-    <span className="flex shrink-0 items-center gap-2.5 text-ink/40 transition-colors duration-300 hover:text-ink/75">
+    <span className="group flex shrink-0 items-center gap-2.5 text-ink/40 transition-colors duration-300 hover:text-ink/75">
       {logoFor[m.name] ? (
-        <svg viewBox="0 0 24 24" className="size-[22px] shrink-0 opacity-55 brightness-0" aria-hidden="true">
+        <svg viewBox="0 0 24 24" className="size-[22px] shrink-0 opacity-40 grayscale transition-opacity duration-300 group-hover:opacity-75" aria-hidden="true">
           {logos[logoFor[m.name]]}
         </svg>
       ) : (
