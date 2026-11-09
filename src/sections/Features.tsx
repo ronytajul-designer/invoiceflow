@@ -219,6 +219,7 @@ export function Features() {
           </FeatureCard>
           <FeatureCard
             className="md:col-span-2 lg:col-span-1 lg:col-start-3 lg:row-span-2 lg:row-start-1"
+            fill
             delay={160}
             glow="top-right"
             title="Real-Time Payment Tracking"

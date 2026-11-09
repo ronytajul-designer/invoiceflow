@@ -37,6 +37,8 @@ type Props = {
   /** "split" puts text beside the panel on wide desktop cards; it stacks below 1024px. */
   layout?: 'stack' | 'split';
   className?: string;
+  /** Let the panel grow to fill a tall card (used by the two-row tracking card). */
+  fill?: boolean;
   /** Entrance delay in ms, used to stagger cards in reading order. */
   delay?: number;
 };
@@ -48,10 +50,11 @@ type Props = {
  * similar heights so no panel is left with a large empty area. On wide
  * "split" cards the panel hugs its content and centres beside the copy.
  * Enters on a spring when scrolled into view. The card is not a link, so
- * only the product panel responds to hover. On desktop, stacked titles
- * reserve two lines so panels in the same row start and end level.
+ * only the product panel responds to hover. Title and description keep one
+ * fixed gap; any spare height sits between that text and the panel, and
+ * stacked panels share a minimum height so a row's panels end level.
  */
-export function FeatureCard({ title, body, children, glow = 'top-right', layout = 'stack', className = '', delay = 0 }: Props) {
+export function FeatureCard({ title, body, children, glow = 'top-right', layout = 'stack', className = '', delay = 0, fill = false }: Props) {
   const split = layout === 'split';
   return (
     <m.article
@@ -65,12 +68,12 @@ export function FeatureCard({ title, body, children, glow = 'top-right', layout 
       <div
         className={`flex h-full flex-col gap-5 rounded-[26px] bg-[#F1F5F3] p-4 ring-1 ring-ink/[0.04] ${glows[glow]} ${split ? 'lg:grid lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:gap-6' : ''}`}
       >
-        <div className={`flex flex-col gap-2.5 px-3 pt-3 ${split ? 'lg:self-center lg:pt-0 lg:pl-5' : ''}`}>
-          <h3 className={`text-[20px] leading-[1.25] font-bold tracking-[-0.02em] text-ink sm:text-[21px] ${split ? '' : 'lg:min-h-[2.5em]'}`}>{title}</h3>
+        <div className={`flex flex-col gap-2.5 px-3 pt-3 ${split ? 'lg:self-center lg:pt-0 lg:pl-5' : fill ? '' : 'lg:flex-1'}`}>
+          <h3 className={`text-[20px] leading-[1.25] font-bold tracking-[-0.02em] text-ink sm:text-[21px]`}>{title}</h3>
           <p className="max-w-[40ch] text-[15px] leading-[1.6] text-muted">{body}</p>
         </div>
         <m.div
-          className={`flex flex-1 flex-col rounded-[20px] bg-white p-4 sm:p-5 `}
+          className={`flex flex-col rounded-[20px] bg-white p-4 sm:p-5 ${split || fill ? 'flex-1' : 'lg:min-h-[180px]'}`}
           variants={panel}
           initial="rest"
           animate="rest"
