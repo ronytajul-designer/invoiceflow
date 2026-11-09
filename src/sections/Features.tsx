@@ -117,12 +117,16 @@ function OverviewPanel() {
         ))}
       </div>
       </div>
+      <p className="flex items-center gap-2 text-[12.5px] text-muted">
+        <span className="rounded-full bg-green-wash px-2 py-0.5 text-[11.5px] font-semibold text-green-ink">+8.1%</span>
+        vs October
+      </p>
       <ul className="grid grid-cols-3 gap-3 border-t border-line pt-4">
         {parts.map((p) => (
           <li key={p.label} className="flex flex-col gap-1">
             <span className="flex items-center gap-1.5 text-[12px] text-muted">
               <span className={`size-2 rounded-full ${p.color}`} />
-              {p.label} <span className="tabular">{p.pct}%</span>
+              {p.label}
             </span>
             <span className="tabular text-[15px] font-bold text-ink">{usd(p.amount)}</span>
           </li>
