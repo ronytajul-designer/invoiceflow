@@ -1,9 +1,12 @@
+import { useState } from 'react';
+import { AnimatePresence, m } from 'framer-motion';
 import { Check, Eye, Mail, Send } from 'lucide-react';
 import { Container } from '../components/ui/Container';
-import { SectionHeading } from '../components/ui/SectionHeading';
-import { Reveal } from '../components/ui/Reveal';
+import { Reveal, EASE_OUT_SOFT } from '../components/ui/Reveal';
+import { InvoiceDetailView, InvoicesView, PaymentsView } from '../components/dashboard/ShowcaseViews';
 import { steps } from '../data/content';
 
+/* Small inline previews shown inside the active step card. */
 function CreateCard() {
   return (
     <div className="flex flex-col gap-2.5 text-[12px]">
@@ -71,39 +74,86 @@ function PaidCard() {
   );
 }
 
-const visuals = [<CreateCard key="c" />, <TrackCard key="t" />, <PaidCard key="p" />];
+
+const previews = [<CreateCard key="c" />, <TrackCard key="t" />, <PaidCard key="p" />];
+/* Full product view shown in the large panel for each step. */
+const views = [InvoiceDetailView, InvoicesView, PaymentsView];
 
 export function HowItWorks() {
+  const [active, setActive] = useState(0);
+  const View = views[active];
   return (
-    <section id="how-it-works" aria-labelledby="how-title" className="relative bg-paper py-20 sm:py-28">
+    <section id="how-it-works" aria-labelledby="how-title" className="bg-white py-20 sm:py-28">
       <Container>
-        <div className="flex flex-col justify-between gap-6 lg:flex-row lg:items-end">
-          <SectionHeading id="how-title" eyebrow="How it works" title="From invoice to payment in three simple steps." />
-          <Reveal className="max-w-[340px] text-[16px] leading-[1.6] text-muted lg:pb-2">
-            No setup call and no accounting jargon. If you can write an email, you can send an invoice.
-          </Reveal>
-        </div>
+        <Reveal className="mx-auto flex max-w-[680px] flex-col items-center gap-5 text-center">
+          <p className="inline-flex items-center gap-2 rounded-full bg-green-wash py-1.5 pr-3.5 pl-2 text-[13px] font-semibold text-green-ink">
+            <span className="size-2 rounded-full bg-green" aria-hidden="true" />
+            How it works
+          </p>
+          <h2 id="how-title" className="text-[34px] leading-[1.08] font-bold tracking-[-0.035em] text-ink sm:text-[46px] lg:text-[54px]">
+            From invoice to payment in three simple steps.
+          </h2>
+        </Reveal>
 
-        <ol className="relative mt-14 grid gap-5 md:grid-cols-3 md:gap-6">
-          {/* Connector: one continuous line that flows through every step on desktop. */}
-          <span aria-hidden="true" className="absolute top-[22px] right-[16%] left-[16%] hidden h-[2px] bg-[linear-gradient(90deg,var(--color-line-strong),var(--color-green))] md:block" />
-          {steps.map((s, i) => (
-            <Reveal as="li" key={s.n} delay={i * 100} className="relative flex flex-col">
-              <div className="flex items-center gap-3 md:flex-col md:gap-4">
-                <span
-                  className={`tabular relative z-10 grid size-11 shrink-0 place-items-center rounded-full border text-[14px] font-bold ${i === 2 ? 'border-green bg-green text-midnight' : 'border-line-strong bg-white text-ink'}`}
+        <div className="mt-14 grid gap-6 sm:mt-16 lg:grid-cols-2">
+          {/* Product panel: brand gradient with the app view cropped by the panel edge. */}
+          <Reveal className="relative order-2 hidden h-[380px] md:block overflow-hidden rounded-[28px] bg-[linear-gradient(180deg,#2FA678_0%,#55C99A_45%,#D3EFE2_100%)] sm:h-[460px] lg:order-1 lg:h-auto lg:min-h-[560px]">
+            <div className="absolute top-16 left-8 w-[980px] sm:top-20 sm:left-12" aria-hidden="true">
+              <AnimatePresence mode="wait">
+                <m.div
+                  key={active}
+                  initial={{ opacity: 0, y: 16 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -8 }}
+                  transition={{ duration: 0.45, ease: EASE_OUT_SOFT }}
                 >
-                  {s.n}
-                </span>
-                <h3 className="text-[20px] font-bold tracking-[-0.015em] text-ink md:text-center">{s.title}</h3>
-              </div>
-              <p className="mt-3 max-w-[34ch] text-[15px] leading-[1.6] text-muted md:mx-auto md:text-center">{s.body}</p>
-              <div className="mt-6 flex-1 rounded-[var(--radius-xl)] border border-line bg-[#F1F4F3] p-4 sm:p-5" aria-hidden="true">
-                {visuals[i]}
-              </div>
-            </Reveal>
-          ))}
-        </ol>
+                  <View />
+                </m.div>
+              </AnimatePresence>
+            </div>
+          </Reveal>
+
+          {/* Steps: one open at a time; the open one shows a small preview. */}
+          <ol className="order-1 flex flex-col gap-4 lg:order-2">
+            {steps.map((st, i) => {
+              const on = i === active;
+              return (
+                <li key={st.n}>
+                  <button
+                    type="button"
+                    aria-expanded={on}
+                    onClick={() => setActive(i)}
+                    className={`w-full rounded-[24px] p-5 text-left ring-1 transition-[background-color,box-shadow] duration-300 sm:p-6 ${on ? 'bg-[radial-gradient(60%_80%_at_100%_0%,rgb(168_197_236/0.35),transparent_70%)] bg-[#F1F5F3] ring-ink/[0.06]' : 'bg-white ring-line hover:ring-line-strong'}`}
+                  >
+                    <span className="flex items-center gap-4">
+                      <span className={`tabular grid size-12 shrink-0 place-items-center rounded-full text-[16px] font-bold transition-colors ${on ? 'bg-green text-midnight' : 'bg-green-wash text-green-ink'}`}>
+                        {st.n}
+                      </span>
+                      <span>
+                        <span className="block text-[20px] font-bold tracking-[-0.02em] text-ink sm:text-[22px]">{st.title}</span>
+                        <span className="mt-1 block text-[15px] leading-[1.55] text-muted">{st.body}</span>
+                      </span>
+                    </span>
+                    <AnimatePresence initial={false}>
+                      {on && (
+                        <m.span
+                          className="block overflow-hidden"
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: 'auto', opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          transition={{ duration: 0.4, ease: EASE_OUT_SOFT }}
+                          aria-hidden="true"
+                        >
+                          <span className="mt-5 block rounded-[18px] bg-white p-4 shadow-[0_10px_30px_-16px_rgb(20_39_70/0.25)]">{previews[i]}</span>
+                        </m.span>
+                      )}
+                    </AnimatePresence>
+                  </button>
+                </li>
+              );
+            })}
+          </ol>
+        </div>
       </Container>
     </section>
   );
