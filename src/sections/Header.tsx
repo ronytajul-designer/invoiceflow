@@ -64,7 +64,7 @@ export function Header() {
       <a href="#main" className="sr-only focus:not-sr-only focus:absolute focus:top-3 focus:left-3 focus:rounded-md focus:bg-white focus:px-3 focus:py-2 focus:text-sm focus:font-semibold">
         Skip to content
       </a>
-      <Container className="flex h-[72px] items-center justify-between gap-6">
+      <Container className="mt-2 flex h-[72px] items-center justify-between gap-6 sm:mt-3">
         <a href="#top" className="shrink-0 rounded-md" aria-label="InvoiceFlow home">
           <Logo className="h-7 w-auto" />
         </a>
@@ -108,7 +108,7 @@ export function Header() {
         id="mobile-menu"
         ref={panelRef}
         hidden={!open}
-        className="fixed inset-x-0 top-[72px] bottom-0 overflow-y-auto border-t border-line bg-paper lg:hidden"
+        className="fixed inset-x-0 top-[80px] bottom-0 sm:top-[84px] overflow-y-auto border-t border-line bg-paper lg:hidden"
       >
         <Container className="flex min-h-full flex-col py-6">
           <nav aria-label="Mobile">

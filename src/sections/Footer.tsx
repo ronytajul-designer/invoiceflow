@@ -56,9 +56,9 @@ function Newsletter() {
           }}
           aria-invalid={state === 'error'}
           aria-describedby="newsletter-msg"
-          className={`h-11 min-w-0 flex-1 rounded-[var(--radius-md)] border bg-white/5 px-4 text-[15px] text-white placeholder:text-white/40 transition-colors outline-none focus:bg-white/10 ${state === 'error' ? 'border-[#F2A36B]' : 'border-white/15 focus:border-green'}`}
+          className={`h-12 min-w-0 flex-1 rounded-full border bg-white/5 px-4 text-[15px] text-white placeholder:text-white/40 transition-colors outline-none focus:bg-white/10 ${state === 'error' ? 'border-[#F2A36B]' : 'border-white/15 focus:border-green'}`}
         />
-        <Button type="submit" size="md">
+        <Button type="submit" size="md" className="sm:!h-12">
           Subscribe
           <ArrowRight className="size-4" strokeWidth={2.5} />
         </Button>

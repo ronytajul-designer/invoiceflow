@@ -47,7 +47,7 @@
 @layer base {
   html {
     scroll-behavior: smooth;
-    scroll-padding-top: 88px;
+    scroll-padding-top: 100px;
     -webkit-text-size-adjust: 100%;
   }
   body {
@@ -140,4 +140,94 @@
 .animate-drift {
   animation: drift 6s ease-in-out infinite;
   animation-delay: var(--drift-delay, 0s);
+}
+
+/*
+ * Signature buttons: soft light trapped inside a pill, in brand colours.
+ * Text colours are fixed (navy on light fills, white on midnight) so contrast
+ * stays at or above WCAG AA wherever the glow sits; see docs/button-contrast.md.
+ */
+@layer components {
+  .btn-glow {
+    position: relative;
+    isolation: isolate;
+    color: var(--color-midnight);
+    background:
+      radial-gradient(60% 75% at 50% 118%, rgb(255 255 255 / 1), transparent 72%),
+      radial-gradient(38% 120% at 6% 10%, rgb(160 226 196 / 1), transparent 70%),
+      radial-gradient(42% 150% at 100% 30%, rgb(176 206 245 / 1), transparent 72%),
+      linear-gradient(180deg, #62d0a2 0%, #4cc493 100%);
+    background-size: 140% 140%;
+    background-position: 50% 50%;
+    box-shadow:
+      inset 0 0 0 1px rgb(255 255 255 / 0.55),
+      inset 0 1px 0 rgb(255 255 255 / 0.75),
+      0 10px 28px -12px rgb(35 122 87 / 0.65);
+    transition:
+      background-position 500ms var(--ease-out-soft),
+      box-shadow 300ms var(--ease-out-soft),
+      transform 200ms var(--ease-out-soft);
+  }
+  .btn-glow:hover {
+    background-position: 30% 70%;
+    box-shadow:
+      inset 0 0 0 1px rgb(255 255 255 / 0.7),
+      inset 0 1px 0 rgb(255 255 255 / 0.85),
+      0 14px 34px -12px rgb(35 122 87 / 0.75);
+  }
+
+  /* Frosted glass with a mint-to-sky gradient rim; for light backgrounds. */
+  .btn-glass {
+    color: var(--color-ink);
+    border: 1.5px solid transparent;
+    background:
+      linear-gradient(180deg, rgb(255 255 255 / 0.78), rgb(255 255 255 / 0.5)) padding-box,
+      linear-gradient(115deg, #8bd6b0, #a8c5ec 50%, #55c99a) border-box;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 6px 20px -14px rgb(11 25 48 / 0.45);
+    transition:
+      background 300ms var(--ease-out-soft),
+      box-shadow 300ms var(--ease-out-soft),
+      transform 200ms var(--ease-out-soft);
+  }
+  .btn-glass:hover {
+    background:
+      linear-gradient(180deg, rgb(255 255 255 / 0.95), rgb(255 255 255 / 0.8)) padding-box,
+      linear-gradient(115deg, #55c99a, #8ab0e8 50%, #237a57) border-box;
+    box-shadow: 0 10px 26px -14px rgb(11 25 48 / 0.5);
+  }
+
+  /* Midnight pill with an inner aurora and a gradient rim. */
+  .btn-aurora {
+    color: #fff;
+    border: 1.5px solid transparent;
+    background:
+      radial-gradient(65% 100% at 50% 135%, rgb(85 201 154 / 0.6), transparent 72%) padding-box,
+      radial-gradient(38% 130% at 0% 50%, rgb(138 176 232 / 0.35), transparent 72%) padding-box,
+      radial-gradient(30% 120% at 100% 40%, rgb(139 214 176 / 0.22), transparent 72%) padding-box,
+      linear-gradient(#0b1930, #0b1930) padding-box,
+      linear-gradient(110deg, #8bd6b0, #a8c5ec 45%, #55c99a 80%, #8bd6b0) border-box;
+    background-size: 100% 100%, 100% 100%, 100% 100%, 100% 100%, 200% 100%;
+    background-position: 0 0, 0 0, 0 0, 0 0, 0% 50%;
+    box-shadow: 0 8px 24px -12px rgb(11 25 48 / 0.6);
+    transition:
+      background-position 700ms var(--ease-out-soft),
+      box-shadow 300ms var(--ease-out-soft),
+      transform 200ms var(--ease-out-soft);
+  }
+  .btn-aurora:hover {
+    background-position: 0 0, 0 0, 0 0, 0 0, 100% 50%;
+    box-shadow: 0 12px 30px -12px rgb(35 122 87 / 0.55);
+  }
+
+  .btn-glow:hover,
+  .btn-glass:hover,
+  .btn-aurora:hover {
+    transform: translateY(-1px);
+  }
+  .btn-glow:active,
+  .btn-glass:active,
+  .btn-aurora:active {
+    transform: translateY(1px);
+  }
 }

@@ -14,11 +14,11 @@ import { DashboardPreview } from '../components/dashboard/DashboardPreview';
 function AudienceChip({ label, dot, delay = 0, className = '' }: { label: string; dot: string; delay?: number; className?: string }) {
   return (
     <span
-      className={`animate-drift pointer-events-none absolute z-20 hidden items-center gap-2 rounded-full border border-white/80 bg-white/75 py-2 pr-4 pl-2.5 text-[15px] font-medium text-ink shadow-[0_8px_24px_-12px_rgb(11_25_48/0.35)] backdrop-blur-md lg:inline-flex ${className}`}
+      className={`animate-drift pointer-events-none absolute z-20 hidden items-center gap-1.5 rounded-full bg-white/60 py-1.5 pr-3 pl-1.5 text-[13.5px] font-medium text-ink-soft shadow-[0_6px_20px_-12px_rgb(11_25_48/0.4)] ring-1 ring-white/70 backdrop-blur-md lg:inline-flex ${className}`}
       style={{ '--drift-delay': `${delay}s` } as CSSProperties}
       aria-hidden="true"
     >
-      <span className="size-4 rounded-full" style={{ background: dot }} />
+      <span className="size-3.5 rounded-full ring-2 ring-white/80" style={{ background: dot }} />
       {label}
     </span>
   );
@@ -44,10 +44,13 @@ function HeroAtmosphere() {
 
 export function Hero() {
   return (
-    <section id="top" aria-labelledby="hero-title" className="-mt-[72px] bg-white px-2 pt-2 sm:px-3 sm:pt-3">
+    <section id="top" aria-labelledby="hero-title" className="-mt-[80px] bg-white px-2 pt-2 sm:-mt-[84px] sm:px-3 sm:pt-3">
       <div className="relative isolate overflow-hidden rounded-[28px] sm:rounded-[40px]">
         <HeroAtmosphere />
         <Container className="relative flex flex-col items-center pt-[120px] text-center sm:pt-[148px] lg:pt-[164px]">
+          {/* Chips sit at headline and subhead height, well away from the CTA row. */}
+          <AudienceChip label="Freelancers" dot="linear-gradient(135deg,#8BD6B0,#237A57)" className="top-[176px] left-[1%] xl:left-[3%]" />
+          <AudienceChip label="Agencies" dot="linear-gradient(135deg,#A8C5EC,#2F5BD3)" delay={1.2} className="top-[372px] right-[1%] xl:right-[3%]" />
           <Reveal>
             <h1 id="hero-title" className="text-[42px] leading-[1.06] font-bold tracking-[-0.04em] text-ink sm:text-[60px] lg:text-[76px]">
               Get paid faster.
@@ -66,7 +69,7 @@ export function Hero() {
                 Start Free Trial
                 <ArrowRight className="size-4" strokeWidth={2.5} />
               </ButtonLink>
-              <ButtonLink href="#features" size="lg" shape="pill" variant="secondary" className="!border-ink/25 !bg-white/40 backdrop-blur-sm hover:!bg-white/80">
+              <ButtonLink href="#features" size="lg" shape="pill" variant="secondary">
                 Explore Features
               </ButtonLink>
             </div>
@@ -77,8 +80,6 @@ export function Hero() {
           </Reveal>
 
           <div className="relative mt-14 w-full max-w-[1080px] sm:mt-16 lg:mt-20">
-            <AudienceChip label="Freelancers" dot="linear-gradient(135deg,#8BD6B0,#237A57)" className="-top-[150px] left-[4%]" />
-            <AudienceChip label="Agencies" dot="linear-gradient(135deg,#A8C5EC,#2F5BD3)" delay={1.2} className="-top-[150px] right-[4%]" />
             <AudienceChip label="Consultants" dot="linear-gradient(135deg,#FCD9B8,#B4540A)" delay={2.1} className="top-[170px] -left-[132px] !hidden xl:!inline-flex" />
             <AudienceChip label="Small businesses" dot="linear-gradient(135deg,#55C99A,#142746)" delay={0.6} className="top-[270px] -right-[150px] !hidden xl:!inline-flex" />
 
