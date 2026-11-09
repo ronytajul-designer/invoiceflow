@@ -1,14 +1,35 @@
 import { invoices, usd, type Invoice } from '../../data/dashboard';
 import { StatusBadge } from '../ui/StatusBadge';
 
+/**
+ * Company marks for the fictional clients, matching the glyphs in the trust
+ * strip so each company looks the same everywhere. One tile shape, one size
+ * ratio and one muted brand palette keep the set consistent.
+ */
+const marks: Record<string, { bg: string; glyph: JSX.Element }> = {
+  'Northwind Studio': { bg: '#142746', glyph: <circle cx="8" cy="8" r="5" /> },
+  'Halcyon & Co.': { bg: '#2F5BD3', glyph: <path d="M8 3 13.5 13h-11z" /> },
+  'Brightline Consulting': { bg: '#237A57', glyph: <rect x="3.5" y="3.5" width="9" height="9" rx="2" /> },
+  'Fernwood Bakery': { bg: '#B4540A', glyph: <path d="M8 2.5c3 2.4 4.4 5.4 0 11-4.4-5.6-3-8.6 0-11Z" /> },
+  'Atlas Field Labs': { bg: '#3D6B8F', glyph: <path d="M3 8h10M8 3v10" stroke="#fff" strokeWidth="2.6" strokeLinecap="round" /> },
+  'Kestrel Media': { bg: '#55C99A', glyph: <path d="M2.5 12 8 4l5.5 8z" /> },
+};
+
 export function ClientAvatar({ invoice, size = 'sm' }: { invoice: Invoice; size?: 'sm' | 'md' }) {
+  const mark = marks[invoice.client];
+  const box = size === 'sm' ? 'size-6 rounded-[7px]' : 'size-8 rounded-[9px]';
+  if (!mark) {
+    return (
+      <span className={`grid shrink-0 place-items-center bg-ink font-bold text-white ${box} ${size === 'sm' ? 'text-[9.5px]' : 'text-[11px]'}`} aria-hidden="true">
+        {invoice.initials}
+      </span>
+    );
+  }
   return (
-    <span
-      className={`grid shrink-0 place-items-center rounded-full font-bold text-ink-soft ${size === 'sm' ? 'size-6 text-[9.5px]' : 'size-8 text-[11px]'}`}
-      style={{ background: invoice.hue }}
-      aria-hidden="true"
-    >
-      {invoice.initials}
+    <span className={`grid shrink-0 place-items-center ${box}`} style={{ background: mark.bg }} aria-hidden="true">
+      <svg viewBox="0 0 16 16" className={size === 'sm' ? 'size-3.5' : 'size-[18px]'} fill="#fff">
+        {mark.glyph}
+      </svg>
     </span>
   );
 }
