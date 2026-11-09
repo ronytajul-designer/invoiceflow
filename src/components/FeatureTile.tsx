@@ -1,4 +1,3 @@
-import type { LucideIcon } from 'lucide-react';
 import type { ReactNode } from 'react';
 import { Reveal } from './ui/Reveal';
 
@@ -17,7 +16,6 @@ const glows: Record<Glow, string> = {
 };
 
 type Props = {
-  icon: LucideIcon;
   title: string;
   body: string;
   /** Product UI shown on the white inset panel. Decorative; the title and body carry the meaning. */
@@ -35,7 +33,7 @@ type Props = {
  * panel takes the remaining height, so rows line up and gaps stay even.
  * The panel lifts on hover.
  */
-export function FeatureCard({ icon: Icon, title, body, children, glow = 'top-right', layout = 'stack', className = '', delay = 0 }: Props) {
+export function FeatureCard({ title, body, children, glow = 'top-right', layout = 'stack', className = '', delay = 0 }: Props) {
   const split = layout === 'split';
   return (
     <Reveal as="article" delay={delay} className={`group h-full ${className}`}>
@@ -43,12 +41,7 @@ export function FeatureCard({ icon: Icon, title, body, children, glow = 'top-rig
         className={`flex h-full flex-col gap-5 rounded-[26px] bg-[#F1F5F3] p-4 ring-1 ring-ink/[0.04] ${glows[glow]} ${split ? 'lg:grid lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:gap-6' : ''}`}
       >
         <div className={`flex flex-col gap-2.5 px-3 pt-3 ${split ? 'lg:self-center lg:pt-0 lg:pl-5' : ''}`}>
-          <h3 className="flex items-center gap-2.5 text-[20px] font-bold tracking-[-0.02em] text-ink sm:text-[21px]">
-            <span className="grid size-8 shrink-0 place-items-center rounded-full bg-white/80 text-green-ink ring-1 ring-white">
-              <Icon className="size-4" strokeWidth={2.25} aria-hidden="true" />
-            </span>
-            {title}
-          </h3>
+          <h3 className="text-[20px] leading-[1.25] font-bold tracking-[-0.02em] text-ink sm:text-[21px]">{title}</h3>
           <p className="max-w-[40ch] text-[15px] leading-[1.6] text-muted">{body}</p>
         </div>
         <div

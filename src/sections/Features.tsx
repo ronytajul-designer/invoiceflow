@@ -1,4 +1,4 @@
-import { BarChart3, BellRing, FileText, LineChart, Plus, Radar, Send, Users } from 'lucide-react';
+import { BellRing, Plus, Send } from 'lucide-react';
 import { Container } from '../components/ui/Container';
 import { Reveal } from '../components/ui/Reveal';
 import { FeatureCard } from '../components/FeatureTile';
@@ -258,7 +258,6 @@ export function Features() {
         <div className="mt-14 grid gap-6 sm:mt-20 md:grid-cols-2 lg:grid-cols-3">
           <FeatureCard
             className="lg:col-start-1 lg:row-start-1"
-            icon={FileText}
             glow="top-left"
             title="Create Professional Invoices"
             body="Design and send polished invoices in seconds using customizable templates."
@@ -268,7 +267,6 @@ export function Features() {
           <FeatureCard
             className="lg:col-start-2 lg:row-start-1"
             delay={80}
-            icon={BellRing}
             glow="bottom-right"
             title="Automated Payment Reminders"
             body="Automatically remind clients about upcoming and overdue payments."
@@ -278,7 +276,6 @@ export function Features() {
           <FeatureCard
             className="md:col-span-2 lg:col-span-1 lg:col-start-3 lg:row-span-2 lg:row-start-1"
             delay={160}
-            icon={Radar}
             glow="top-right"
             title="Real-Time Payment Tracking"
             body="Know exactly which invoices are paid, pending, or overdue, the moment it happens."
@@ -288,21 +285,19 @@ export function Features() {
           <FeatureCard
             className="md:col-span-2 lg:col-start-1 lg:row-start-2"
             layout="split"
-            icon={LineChart}
             glow="bottom-left"
             title="Smart Financial Overview"
             body="Get a clear overview of revenue, outstanding balances, and payment activity."
           >
             <OverviewPanel />
           </FeatureCard>
-          <FeatureCard className="lg:col-start-1 lg:row-start-3" icon={Users} glow="top-left" title="Client Management" body="Keep client information, invoice history, and payment records organized.">
+          <FeatureCard className="lg:col-start-1 lg:row-start-3" glow="top-left" title="Client Management" body="Keep client information, invoice history, and payment records organized.">
             <ClientsPanel />
           </FeatureCard>
           <FeatureCard
             className="lg:col-span-2 lg:col-start-2 lg:row-start-3"
             layout="split"
             delay={80}
-            icon={BarChart3}
             glow="top-right"
             title="Simple Reporting"
             body="Understand your business performance with clear financial reports."
