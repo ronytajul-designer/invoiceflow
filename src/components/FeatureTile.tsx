@@ -74,7 +74,7 @@ export function FeatureCard({ title, body, children, glow = 'top-right', layout 
           <p className="max-w-[40ch] text-[15px] leading-[1.6] text-muted">{body}</p>
         </div>
         <m.div
-          className={`flex flex-1 flex-col rounded-[20px] bg-white p-4 sm:p-5 ${split ? 'lg:flex-none lg:self-center' : ''}`}
+          className={`flex flex-1 flex-col rounded-[20px] bg-white p-4 sm:p-5 `}
           variants={panel}
           aria-hidden="true"
         >

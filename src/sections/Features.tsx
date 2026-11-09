@@ -25,11 +25,7 @@ function InvoicePanel() {
     <div className="flex flex-1 flex-col justify-center">
       <p className="text-[12px] text-muted">INV-0418 · Northwind Studio</p>
       <p className="tabular mt-1 text-[30px] leading-tight font-bold tracking-[-0.03em] text-ink">$4,250.00</p>
-      <p className="mt-4 flex justify-between border-t border-line pt-3 text-[12.5px]">
-        <span className="text-ink-soft">Brand identity system</span>
-        <span className="tabular text-muted">Fixed fee</span>
-      </p>
-      <div className="mt-4 flex items-center justify-between">
+      <div className="mt-6 flex items-center justify-between">
         <span className="tabular text-[12.5px] text-muted">Due Nov 30</span>
         <span className="flex h-9 items-center gap-1.5 rounded-full bg-ink px-4 text-[12.5px] font-semibold text-white">
           <Send className="size-3.5" strokeWidth={2.25} />
@@ -45,12 +41,11 @@ function RemindersPanel() {
     { when: '3 days before due', on: true },
     { when: 'On the due date', on: true },
     { when: '7 days overdue', on: true },
-    { when: '14 days overdue', on: false },
   ];
   return (
     <div className="flex flex-1 flex-col">
       <PanelHeader title="Reminders" aside={<span className="rounded-full bg-green-wash px-2.5 py-0.5 text-[11.5px] font-semibold text-green-ink">Automatic</span>} />
-      <ul className="flex flex-col gap-3.5">
+      <ul className="flex flex-col gap-5">
         {items.map(({ when, on }) => (
           <li key={when} className="flex items-center justify-between text-[13px]">
             <span className={`flex items-center gap-2.5 ${on ? 'text-ink-soft' : 'text-faint'}`}>
@@ -75,6 +70,7 @@ function ActivityPanel() {
     { inv: invoices[3], status: 'Paid · $980', tone: 'text-green-ink' },
     { inv: invoices[4], status: 'Invoice sent', tone: 'text-muted' },
     { inv: invoices[5], status: 'Viewed invoice', tone: 'text-pending' },
+    { inv: invoices[1], status: 'Paid · $2,800', tone: 'text-green-ink' },
   ];
   return (
     <div className="flex flex-1 flex-col">
@@ -104,25 +100,29 @@ function ActivityPanel() {
 
 function OverviewPanel() {
   const parts = [
-    { label: 'Paid', pct: 63, color: 'bg-green' },
-    { label: 'Pending', pct: 25, color: 'bg-pending' },
-    { label: 'Overdue', pct: 12, color: 'bg-overdue' },
+    { label: 'Paid', pct: 63, amount: 31280, color: 'bg-green' },
+    { label: 'Pending', pct: 25, amount: 12330, color: 'bg-pending' },
+    { label: 'Overdue', pct: 12, amount: 6120, color: 'bg-overdue' },
   ];
   return (
-    <div className="flex flex-1 flex-col justify-center">
+    <div className="flex flex-1 flex-col justify-center gap-6">
+      <div>
       <p className="text-[12px] text-muted">Invoiced this month</p>
       <p className="tabular mt-1 text-[30px] leading-tight font-bold tracking-[-0.03em] text-ink">$49,730</p>
-      <div className="mt-5 flex h-2.5 gap-1">
+      <div className="mt-4 flex h-2.5 gap-1">
         {parts.map((p) => (
           <span key={p.label} className={`${p.color} rounded-full`} style={{ width: `${p.pct}%` }} />
         ))}
       </div>
-      <ul className="mt-3 flex flex-wrap gap-x-5 gap-y-1.5 text-[12.5px]">
+      </div>
+      <ul className="grid grid-cols-3 gap-3 border-t border-line pt-4">
         {parts.map((p) => (
-          <li key={p.label} className="flex items-center gap-1.5 text-ink-soft">
-            <span className={`size-2 rounded-full ${p.color}`} />
-            {p.label}
-            <span className="tabular text-muted">{p.pct}%</span>
+          <li key={p.label} className="flex flex-col gap-1">
+            <span className="flex items-center gap-1.5 text-[12px] text-muted">
+              <span className={`size-2 rounded-full ${p.color}`} />
+              {p.label} <span className="tabular">{p.pct}%</span>
+            </span>
+            <span className="tabular text-[15px] font-bold text-ink">{usd(p.amount)}</span>
           </li>
         ))}
       </ul>
