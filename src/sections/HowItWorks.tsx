@@ -24,7 +24,7 @@ export function HowItWorks() {
           </h2>
         </Reveal>
 
-        <div className="mt-14 grid gap-8 sm:mt-16 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] lg:gap-12">
+        <div className="mt-14 grid gap-8 sm:mt-16 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] lg:gap-24">
           {/* Product panel: brand gradient with the app view cropped by the panel edge. */}
           <Reveal className="relative order-1 h-[360px] overflow-hidden rounded-[28px] bg-[linear-gradient(180deg,#2FA678_0%,#55C99A_45%,#D3EFE2_100%)] sm:h-[460px] lg:h-auto lg:min-h-[560px]">
             <div className="absolute top-10 left-6 w-[620px] sm:top-16 sm:left-10 sm:w-[980px]" aria-hidden="true">
@@ -43,18 +43,18 @@ export function HowItWorks() {
           </Reveal>
 
           {/* Steps are text only; the panel is the single visual and follows the selected step. */}
-          <ol className="order-2 flex flex-col justify-center gap-4">
+          <ol className="order-2 flex flex-col gap-4">
             {steps.map((st, i) => {
               const on = i === active;
               return (
-                <li key={st.n}>
+                <li key={st.n} className="lg:flex lg:flex-1">
                   <button
                     type="button"
                     aria-expanded={on}
                     onClick={() => setActive(i)}
-                    className={`w-full rounded-[24px] p-5 text-left ring-1 transition-[background-color,box-shadow] duration-300 sm:p-6 ${on ? 'bg-[radial-gradient(60%_80%_at_100%_0%,rgb(168_197_236/0.35),transparent_70%)] bg-[#F1F5F3] ring-ink/[0.06]' : 'bg-white ring-line hover:ring-line-strong'}`}
+                    className={`flex w-full items-start rounded-[24px] p-5 text-left ring-1 transition-[background-color,box-shadow] duration-300 sm:p-6 ${on ? 'bg-[radial-gradient(60%_80%_at_100%_0%,rgb(168_197_236/0.35),transparent_70%)] bg-[#F1F5F3] ring-ink/[0.06]' : 'bg-white ring-line hover:ring-line-strong'}`}
                   >
-                    <span className="flex items-center gap-4">
+                    <span className="flex items-start gap-4">
                       <span className={`tabular grid size-12 shrink-0 place-items-center rounded-full text-[16px] font-bold transition-colors ${on ? 'bg-green text-midnight' : 'bg-green-wash text-green-ink'}`}>
                         {st.n}
                       </span>
