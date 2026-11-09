@@ -22,10 +22,12 @@ function PanelHeader({ title, aside }: { title: string; aside?: React.ReactNode 
 
 function InvoicePanel() {
   return (
-    <div className="flex flex-1 flex-col justify-center">
-      <p className="text-[12px] text-muted">INV-0418 · Northwind Studio</p>
-      <p className="tabular mt-1 text-[30px] leading-tight font-bold tracking-[-0.03em] text-ink">$4,250.00</p>
-      <div className="mt-6 flex items-center justify-between">
+    <div className="flex flex-1 flex-col justify-between gap-6">
+      <div>
+        <p className="text-[12px] text-muted">INV-0418 · Northwind Studio</p>
+        <p className="tabular mt-1 text-[30px] leading-tight font-bold tracking-[-0.03em] text-ink">$4,250.00</p>
+      </div>
+      <div className="flex items-center justify-between">
         <span className="tabular text-[12.5px] text-muted">Due Nov 30</span>
         <span className="flex h-9 items-center gap-1.5 rounded-full bg-ink px-4 text-[12.5px] font-semibold text-white">
           <Send className="size-3.5" strokeWidth={2.25} />
@@ -105,7 +107,7 @@ function OverviewPanel() {
     { label: 'Overdue', pct: 12, amount: 6120, color: 'bg-overdue' },
   ];
   return (
-    <div className="flex flex-1 flex-col justify-center gap-6">
+    <div className="flex flex-1 flex-col justify-between gap-6">
       <div>
       <p className="text-[12px] text-muted">Invoiced this month</p>
       <p className="tabular mt-1 text-[30px] leading-tight font-bold tracking-[-0.03em] text-ink">$49,730</p>
@@ -159,7 +161,7 @@ function ReportPanel() {
   return (
     <div className="flex flex-1 flex-col">
       <PanelHeader title="Collected by quarter" />
-      <div className="flex h-36 items-end gap-3">
+      <div className="flex min-h-36 flex-1 items-end gap-3">
         {q.map((x, i) => (
           <div key={x.label} className="flex h-full flex-1 flex-col items-center justify-end gap-1.5">
             <span className={`w-full max-w-11 rounded-t-[8px] ${i === q.length - 1 ? 'bg-green' : 'bg-ink/10'}`} style={{ height: `${x.v}%` }} />
