@@ -9,7 +9,7 @@ import { invoices, usd } from '../data/dashboard';
 
 function InvoicePanel() {
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-1 flex-col gap-4">
       <div className="flex items-start justify-between">
         <div>
           <p className="text-[11px] text-faint">Invoice</p>
@@ -20,6 +20,16 @@ function InvoicePanel() {
           Your logo
         </span>
       </div>
+      <dl className="grid grid-cols-2 gap-3 rounded-[12px] bg-paper px-3 py-2.5 text-[11.5px]">
+        <div>
+          <dt className="text-faint">Billed to</dt>
+          <dd className="font-semibold text-ink">Northwind Studio</dd>
+        </div>
+        <div>
+          <dt className="text-faint">Due</dt>
+          <dd className="tabular font-semibold text-ink">Nov 30, 2026</dd>
+        </div>
+      </dl>
       <ul className="flex flex-col gap-2.5 text-[12.5px]">
         {[
           ['Brand identity system', 3200],
@@ -35,7 +45,7 @@ function InvoicePanel() {
           </li>
         ))}
       </ul>
-      <div className="flex items-center justify-between border-t border-line pt-3">
+      <div className="mt-auto flex items-center justify-between border-t border-line pt-3">
         <span className="tabular text-[18px] font-bold text-ink">$4,250.00</span>
         <span className="flex h-8 items-center gap-1.5 rounded-full bg-ink px-3.5 text-[12px] font-semibold text-white">
           <Send className="size-3.5" strokeWidth={2.25} />
@@ -53,7 +63,7 @@ function RemindersPanel() {
     { when: '7 days overdue', on: true },
   ];
   return (
-    <div className="flex flex-col gap-3">
+    <div className="flex flex-1 flex-col gap-3">
       <div className="flex items-center justify-between">
         <span className="text-[14px] font-semibold text-ink">Reminder schedule</span>
         <span className="text-[11.5px] font-semibold text-green-ink">Edit</span>
@@ -75,7 +85,7 @@ function RemindersPanel() {
           </li>
         ))}
       </ul>
-      <span className="flex h-9 items-center justify-center gap-1.5 rounded-[12px] border border-dashed border-green/60 bg-green-wash/50 text-[12px] font-semibold text-green-ink">
+      <span className="mt-auto flex h-9 items-center justify-center gap-1.5 rounded-[12px] border border-dashed border-green/60 bg-green-wash/50 text-[12px] font-semibold text-green-ink">
         <Plus className="size-3.5" strokeWidth={2.5} />
         Add reminder
       </span>
@@ -90,9 +100,11 @@ function ActivityPanel() {
     { inv: invoices[2], what: 'Reminder sent', detail: '3 days overdue', tone: 'text-overdue', time: '9:00' },
     { inv: invoices[3], what: 'Paid', detail: '+$980.00', tone: 'text-green-ink', time: 'Yesterday' },
     { inv: invoices[4], what: 'Invoice sent', detail: 'INV-0414', tone: 'text-muted', time: 'Yesterday' },
+    { inv: invoices[5], what: 'Draft saved', detail: 'INV-0413', tone: 'text-muted', time: 'Mon' },
+    { inv: invoices[1], what: 'Reminder scheduled', detail: 'Nov 21', tone: 'text-pending', time: 'Mon' },
   ];
   return (
-    <div className="flex flex-col gap-3">
+    <div className="flex flex-1 flex-col gap-3">
       <div className="flex items-center justify-between">
         <span className="flex items-center gap-2 text-[14px] font-semibold text-ink">
           Payment activity
@@ -117,6 +129,7 @@ function ActivityPanel() {
           </li>
         ))}
       </ul>
+      <span className="mt-auto border-t border-line pt-3 text-center text-[12px] font-semibold text-green-ink">View all activity →</span>
     </div>
   );
 }
@@ -128,7 +141,7 @@ function OverviewPanel() {
     { label: 'Overdue', amount: 6120, n: 2, pct: 12, color: 'bg-overdue', dot: 'bg-overdue' },
   ];
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-1 flex-col gap-4">
       <div className="flex items-start justify-between">
         <div>
           <p className="text-[11px] text-faint">Invoiced this month</p>
@@ -149,7 +162,7 @@ function OverviewPanel() {
           </li>
         ))}
       </ul>
-      <div className="flex h-2.5 gap-1">
+      <div className="mt-auto flex h-2.5 gap-1">
         {parts.map((p) => (
           <span key={p.label} className={`${p.color} rounded-full`} style={{ width: `${p.pct}%` }} />
         ))}
@@ -191,12 +204,12 @@ function ReportPanel() {
     { label: 'Q4', v: 92 },
   ];
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-1 flex-col gap-4">
       <div className="flex items-center justify-between">
         <span className="text-[14px] font-semibold text-ink">Collected by quarter</span>
         <span className="rounded-full border border-line px-2.5 py-1 text-[11.5px] font-semibold text-ink-soft">Export PDF</span>
       </div>
-      <div className="flex h-28 items-end gap-3">
+      <div className="flex min-h-28 flex-1 items-end gap-3">
         {q.map((x, i) => (
           <div key={x.label} className="flex h-full flex-1 flex-col items-center justify-end gap-1.5">
             <span className={`w-full max-w-11 rounded-t-[8px] ${i === q.length - 1 ? 'bg-green' : 'bg-ink/10'}`} style={{ height: `${x.v}%` }} />

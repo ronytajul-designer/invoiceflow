@@ -52,10 +52,11 @@ export function FeatureCard({ icon: Icon, title, body, children, glow = 'top-rig
           <p className="max-w-[40ch] text-[15px] leading-[1.6] text-muted">{body}</p>
         </div>
         <div
-          className="flex flex-1 flex-col justify-center rounded-[20px] bg-white p-4 shadow-[0_1px_2px_rgb(20_39_70/0.04),0_10px_30px_-16px_rgb(20_39_70/0.25)] transition-[transform,box-shadow] duration-500 ease-[var(--ease-out-soft)] group-hover:-translate-y-1 group-hover:shadow-[0_1px_2px_rgb(20_39_70/0.04),0_18px_40px_-16px_rgb(20_39_70/0.3)] sm:p-5"
+          className="flex flex-1 flex-col rounded-[20px] bg-white p-4 shadow-[0_1px_2px_rgb(20_39_70/0.04),0_10px_30px_-16px_rgb(20_39_70/0.25)] transition-[transform,box-shadow] duration-500 ease-[var(--ease-out-soft)] group-hover:-translate-y-1 group-hover:shadow-[0_1px_2px_rgb(20_39_70/0.04),0_18px_40px_-16px_rgb(20_39_70/0.3)] sm:p-5"
           aria-hidden="true"
         >
-          {children}
+          {/* Panel content stretches; each panel pins its last row to the bottom with mt-auto. */}
+          <div className="flex flex-1 flex-col">{children}</div>
         </div>
       </div>
     </Reveal>
