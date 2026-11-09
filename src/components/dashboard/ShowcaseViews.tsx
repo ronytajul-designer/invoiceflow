@@ -2,7 +2,7 @@ import { ArrowDownLeft, Check, CreditCard, Eye, FileText, Landmark, Send } from 
 import { invoices, usd } from '../../data/dashboard';
 import { StatusBadge } from '../ui/StatusBadge';
 import { AppFrame } from './AppFrame';
-import { InvoiceTable } from './InvoiceTable';
+import { ClientAvatar, InvoiceTable } from './InvoiceTable';
 import { RevenueChart } from './RevenueChart';
 
 export function InvoicesView() {
@@ -229,6 +229,46 @@ export function AnalyticsView() {
             ))}
           </ul>
         </div>
+      </div>
+    </AppFrame>
+  );
+}
+
+/**
+ * Paid-invoices list in the same left-aligned table shape as the other How It
+ * Works views, so it reads well when the panel crops the right edge.
+ */
+export function PaidListView() {
+  const rows = [
+    { inv: invoices[0], method: 'Card', when: 'Nov 12' },
+    { inv: invoices[3], method: 'Bank transfer', when: 'Nov 10' },
+    { inv: invoices[1], method: 'Card', when: 'Nov 8' },
+    { inv: invoices[4], method: 'Bank transfer', when: 'Nov 5' },
+    { inv: invoices[2], method: 'Card', when: 'Nov 3' },
+  ];
+  return (
+    <AppFrame active="Payments" title="Payments" subtitle="$31,280 received this month">
+      <div className="flex flex-wrap gap-1.5">
+        {(['Received 14', 'Expected 6', 'Overdue 2'] as const).map((f, i) => (
+          <span key={f} className={`rounded-full border px-2.5 py-1 text-[11.5px] font-semibold ${i === 0 ? 'border-ink bg-ink text-white' : 'border-line bg-white text-ink-soft'}`}>
+            {f}
+          </span>
+        ))}
+      </div>
+      <div className="rounded-[var(--radius-lg)] border border-line bg-white">
+        <p className="border-b border-line px-4 py-3 text-[13px] font-semibold text-ink">Received</p>
+        <ul>
+          {rows.map(({ inv, method, when }) => (
+            <li key={inv.id + when} className="flex items-center gap-3 border-t border-line/70 px-4 py-2.5 text-[12px] first:border-t-0">
+              <ClientAvatar invoice={inv} />
+              <span className="w-[124px] truncate font-semibold text-ink">{inv.client}</span>
+              <span className="tabular w-[60px] font-bold text-green-ink">+{usd(inv.amount)}</span>
+              <StatusBadge status="Paid" />
+              <span className="ml-6 w-[100px] text-muted">{method}</span>
+              <span className="tabular text-faint">{when}</span>
+            </li>
+          ))}
+        </ul>
       </div>
     </AppFrame>
   );

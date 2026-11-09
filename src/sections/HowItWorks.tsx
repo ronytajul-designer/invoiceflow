@@ -1,13 +1,13 @@
 import { useRef, useState } from 'react';
 import { AnimatePresence, m, useInView, useReducedMotion } from 'framer-motion';
-import { Clock3, CreditCard, Eye, Pause, Play } from 'lucide-react';
+import { Clock3, CreditCard, Eye } from 'lucide-react';
 import { Container } from '../components/ui/Container';
 import { Reveal, EASE_OUT_SOFT } from '../components/ui/Reveal';
-import { InvoiceDetailView, InvoicesView, PaymentsView } from '../components/dashboard/ShowcaseViews';
+import { InvoiceDetailView, InvoicesView, PaidListView } from '../components/dashboard/ShowcaseViews';
 import { steps } from '../data/content';
 
-/* Full product view shown in the large panel for each step. */
-const views = [InvoiceDetailView, InvoicesView, PaymentsView];
+/* Full product view shown in the large panel for each step. All three are left-aligned lists or documents, so they crop alike. */
+const views = [InvoiceDetailView, InvoicesView, PaidListView];
 /* One concrete detail per step, pinned to the card foot so the space carries information. */
 const meta = [
   { icon: Clock3, text: 'Ready in about a minute' },
@@ -17,17 +17,45 @@ const meta = [
 /** Seconds each step stays active before the next one plays. */
 const STEP_SECONDS = 6;
 
+/** Step number inside a ring; on the active step the ring fills over the step's time. */
+function StepNumber({ n, on, playing, reduced, onDone }: { n: string; on: boolean; playing: boolean; reduced: boolean; onDone: () => void }) {
+  return (
+    <span className="relative grid size-12 shrink-0 place-items-center">
+      <svg viewBox="0 0 48 48" className="absolute inset-0 -rotate-90" aria-hidden="true">
+        <circle cx="24" cy="24" r="22.5" fill="none" strokeWidth="2.5" className={`transition-colors duration-300 ${on ? 'stroke-green/25' : 'stroke-transparent'}`} />
+        {on && (
+          <circle
+            cx="24"
+            cy="24"
+            r="22.5"
+            fill="none"
+            strokeWidth="2.5"
+            strokeLinecap="round"
+            pathLength={1}
+            className="step-ring stroke-green-ink"
+            style={{ animationDuration: `${STEP_SECONDS}s`, animationPlayState: playing ? 'running' : 'paused', strokeDashoffset: reduced ? 0 : undefined }}
+            onAnimationEnd={onDone}
+          />
+        )}
+      </svg>
+      <span className={`tabular grid size-10 place-items-center rounded-full text-[15px] font-bold transition-colors duration-300 ${on ? 'bg-green text-midnight' : 'bg-green-wash text-green-ink group-hover:bg-green/30'}`}>
+        {n}
+      </span>
+    </span>
+  );
+}
+
 export function HowItWorks() {
   const [active, setActive] = useState(0);
   const [hovering, setHovering] = useState(false);
-  const [userPaused, setUserPaused] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { amount: 0.4 });
-  const reduced = useReducedMotion();
-  // Auto-advance only while visible, not hovered, not paused, and motion is allowed.
-  const playing = inView && !hovering && !userPaused && !reduced;
+  const reduced = !!useReducedMotion();
+  // Auto-advance only while visible, not hovered, and when motion is allowed.
+  const playing = inView && !hovering && !reduced;
   const View = views[active];
   const next = () => setActive((i) => (i + 1) % steps.length);
+
   return (
     <section id="how-it-works" aria-labelledby="how-title" className="bg-white py-20 sm:py-28">
       <Container>
@@ -55,60 +83,35 @@ export function HowItWorks() {
             </div>
           </Reveal>
 
-          {/* Steps: each is a button; the active one fills a progress line, then the next step plays. */}
-          <div className="order-2 flex flex-col gap-4" onMouseEnter={() => setHovering(true)} onMouseLeave={() => setHovering(false)}>
-            <ol className="flex flex-1 flex-col gap-4">
-              {steps.map((st, i) => {
-                const on = i === active;
-                const Meta = meta[i].icon;
-                return (
-                  <li key={st.n} className="lg:flex lg:flex-1">
-                    <button
-                      type="button"
-                      aria-current={on ? 'step' : undefined}
-                      onClick={() => setActive(i)}
-                      className={`group relative flex w-full flex-col overflow-hidden rounded-[24px] p-5 text-left ring-1 transition-[background-color,box-shadow,transform] duration-300 sm:p-6 ${on ? 'bg-[radial-gradient(60%_80%_at_100%_0%,rgb(168_197_236/0.35),transparent_70%)] bg-[#F1F5F3] ring-ink/[0.06]' : 'bg-white ring-line hover:-translate-y-0.5 hover:shadow-[0_12px_28px_-18px_rgb(20_39_70/0.35)] hover:ring-green/40'}`}
-                    >
-                      <span className="flex items-start gap-4">
-                        <span className={`tabular grid size-12 shrink-0 place-items-center rounded-full text-[16px] font-bold transition-colors ${on ? 'bg-green text-midnight' : 'bg-green-wash text-green-ink group-hover:bg-green/30'}`}>
-                          {st.n}
-                        </span>
-                        <span>
-                          <span className="block text-[20px] font-bold tracking-[-0.02em] text-ink sm:text-[22px]">{st.title}</span>
-                          <span className="mt-1 block text-[15px] leading-[1.55] text-muted">{st.body}</span>
-                        </span>
+          {/* Steps: each is a button; the active step's ring fills, then the next step plays. Hover pauses. */}
+          <ol className="order-2 flex flex-col gap-4" onMouseEnter={() => setHovering(true)} onMouseLeave={() => setHovering(false)}>
+            {steps.map((st, i) => {
+              const on = i === active;
+              const Meta = meta[i].icon;
+              return (
+                <li key={st.n} className="lg:flex lg:flex-1">
+                  <button
+                    type="button"
+                    aria-current={on ? 'step' : undefined}
+                    onClick={() => setActive(i)}
+                    className={`group flex w-full flex-col rounded-[24px] p-5 text-left ring-1 transition-[background-color,box-shadow,transform] duration-300 ease-[var(--ease-out-soft)] sm:p-6 ${on ? 'bg-[radial-gradient(60%_80%_at_100%_0%,rgb(168_197_236/0.35),transparent_70%)] bg-[#F1F5F3] ring-ink/[0.06]' : 'bg-white ring-line hover:-translate-y-0.5 hover:shadow-[0_12px_28px_-18px_rgb(20_39_70/0.35)] hover:ring-green/40'}`}
+                  >
+                    <span className="flex items-start gap-4">
+                      <StepNumber n={st.n} on={on} playing={playing} reduced={reduced} onDone={next} />
+                      <span>
+                        <span className="block text-[20px] font-bold tracking-[-0.02em] text-ink sm:text-[22px]">{st.title}</span>
+                        <span className="mt-1 block text-[15px] leading-[1.55] text-muted">{st.body}</span>
                       </span>
-                      <span className={`mt-5 flex items-center gap-2 pl-16 text-[13px] font-medium lg:mt-auto lg:pt-5 ${on ? 'text-green-ink' : 'text-faint'}`}>
-                        <Meta className="size-4" strokeWidth={2} aria-hidden="true" />
-                        {meta[i].text}
-                      </span>
-                      {/* Progress line: a track on every card, a fill on the active one. */}
-                      <span className="absolute inset-x-6 bottom-0 h-[3px] overflow-hidden rounded-full bg-ink/[0.06]" aria-hidden="true">
-                        {on && (
-                          <span
-                            key={active}
-                            className="step-progress block h-full origin-left rounded-full bg-green"
-                            style={{ animationDuration: `${STEP_SECONDS}s`, animationPlayState: playing ? 'running' : 'paused', transform: reduced ? 'scaleX(1)' : undefined }}
-                            onAnimationEnd={next}
-                          />
-                        )}
-                      </span>
-                    </button>
-                  </li>
-                );
-              })}
-            </ol>
-            {!reduced && (
-              <button
-                type="button"
-                onClick={() => setUserPaused((v) => !v)}
-                className="flex items-center gap-2 self-start rounded-full px-3 py-1.5 text-[13px] font-semibold text-muted transition-colors hover:bg-ink/5 hover:text-ink"
-              >
-                {userPaused ? <Play className="size-3.5" strokeWidth={2.5} /> : <Pause className="size-3.5" strokeWidth={2.5} />}
-                {userPaused ? 'Play steps' : 'Pause steps'}
-              </button>
-            )}
-          </div>
+                    </span>
+                    <span className={`mt-5 flex items-center gap-2 pl-16 text-[13px] font-medium transition-colors duration-300 lg:mt-auto lg:pt-5 ${on ? 'text-green-ink' : 'text-faint'}`}>
+                      <Meta className="size-4" strokeWidth={2} aria-hidden="true" />
+                      {meta[i].text}
+                    </span>
+                  </button>
+                </li>
+              );
+            })}
+          </ol>
         </div>
       </Container>
     </section>

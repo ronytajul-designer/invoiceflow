@@ -226,22 +226,24 @@
   }
 }
 
-/* How It Works: progress fill for the active step (duration and pause set inline). */
-@keyframes step-progress {
+/* How It Works: the active step's number ring fills over the step's time (duration and pause set inline). */
+@keyframes step-ring {
   from {
-    transform: scaleX(0);
+    stroke-dashoffset: 1;
   }
   to {
-    transform: scaleX(1);
+    stroke-dashoffset: 0;
   }
 }
-.step-progress {
-  animation-name: step-progress;
+.step-ring {
+  stroke-dasharray: 1;
+  animation-name: step-ring;
   animation-timing-function: linear;
   animation-fill-mode: both;
 }
 @media (prefers-reduced-motion: reduce) {
-  .step-progress {
+  .step-ring {
     animation: none !important;
+    stroke-dashoffset: 0;
   }
 }
