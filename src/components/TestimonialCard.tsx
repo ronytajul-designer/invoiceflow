@@ -1,3 +1,4 @@
+import { Star } from 'lucide-react';
 import { Reveal } from './ui/Reveal';
 
 type Props = {
@@ -10,7 +11,7 @@ type Props = {
   delay?: number;
 };
 
-/** Quote card: tinted shell with a soft corner glow, quote on top, name and role at the foot. */
+/** Quote card: tinted shell with a soft corner glow, quote on top; name, role, star rating and outcome at the foot. */
 export function TestimonialCard({ quote, name, role, theme, className = '', delay = 0 }: Props) {
   return (
     <Reveal as="figure" delay={delay} className={`h-full ${className}`}>
@@ -23,7 +24,14 @@ export function TestimonialCard({ quote, name, role, theme, className = '', dela
             <span className="block text-[16px] font-bold tracking-[-0.01em] text-ink">{name}</span>
             <span className="mt-1 block text-[14px] text-muted">{role}</span>
           </span>
-          <span className="shrink-0 rounded-full bg-white px-3 py-1 text-[12px] font-semibold text-green-ink ring-1 ring-green/25">{theme}</span>
+          <span className="flex shrink-0 flex-col items-end gap-1.5">
+            <span className="flex gap-0.5" role="img" aria-label="Rated 5 out of 5">
+              {Array.from({ length: 5 }, (_, i) => (
+                <Star key={i} className="size-4 fill-green text-green" strokeWidth={1.5} aria-hidden="true" />
+              ))}
+            </span>
+            <span className="text-[12.5px] text-muted">{theme}</span>
+          </span>
         </figcaption>
       </div>
     </Reveal>

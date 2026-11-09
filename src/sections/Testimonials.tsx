@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import { BellRing, CheckCircle2 } from 'lucide-react';
+import { CheckCircle2 } from 'lucide-react';
 import { Container } from '../components/ui/Container';
 import { Reveal } from '../components/ui/Reveal';
 import { ArcMotif } from '../components/ui/ArcMotif';
@@ -7,6 +7,8 @@ import { TestimonialCard } from '../components/TestimonialCard';
 import { ClientAvatar } from '../components/dashboard/InvoiceTable';
 import { invoices } from '../data/dashboard';
 import { testimonials } from '../data/content';
+import teamLaptops from '../assets/photos/team-laptops.webp';
+import clientMeeting from '../assets/photos/client-meeting.webp';
 
 /**
  * Product tiles fill the bento slots the reference gives to photos. They show
@@ -43,17 +45,12 @@ function PaymentToast() {
   );
 }
 
-function ReminderToast() {
+/** Decorative work photo in the brand duotone. Not tied to any quote or name. */
+function PhotoTile({ src, className = '', delay = 0 }: { src: string; className?: string; delay?: number }) {
   return (
-    <div className="w-full max-w-[280px] rounded-[18px] bg-white p-4 shadow-[0_18px_40px_-18px_rgb(11_25_48/0.35)]">
-      <span className="flex items-center gap-2 text-[13px] font-semibold text-ink">
-        <span className="grid size-7 place-items-center rounded-full bg-green-wash text-green-ink">
-          <BellRing className="size-3.5" strokeWidth={2.25} />
-        </span>
-        Reminder sent for you
-      </span>
-      <p className="mt-2.5 text-[12.5px] leading-[1.5] text-muted">Halcyon &amp; Co. · INV-0417 is due Friday. No follow-up email needed.</p>
-    </div>
+    <Reveal delay={delay} className={`h-full ${className}`}>
+      <img src={src} alt="" loading="lazy" decoding="async" className="h-full min-h-[240px] w-full rounded-[26px] object-cover" />
+    </Reveal>
   );
 }
 
@@ -68,17 +65,19 @@ export function Testimonials() {
           </h2>
         </Reveal>
 
-        {/* Bento, one 24px gap: wide quote + tile, then tile + two quotes. */}
-        <div className="mt-14 grid gap-6 sm:mt-16 md:grid-cols-2 lg:grid-cols-3">
-          <TestimonialCard {...a} className="md:col-span-2" />
-          <ProductTile tone="mint" delay={80}>
+        {/*
+          Bento on a 12-column grid, one 24px gap, matching the reference rhythm:
+          wide quote, quote, photo / photo, quote, wide product tile.
+        */}
+        <div className="mt-14 grid gap-6 sm:mt-16 md:grid-cols-2 lg:grid-cols-12">
+          <TestimonialCard {...a} className="md:col-span-2 lg:col-span-5" />
+          <TestimonialCard {...b} delay={80} className="lg:col-span-4" />
+          <PhotoTile src={teamLaptops} delay={160} className="lg:col-span-3" />
+          <PhotoTile src={clientMeeting} className="hidden lg:col-span-3 lg:block" />
+          <TestimonialCard {...c} delay={80} className="lg:col-span-4" />
+          <ProductTile tone="mint" delay={160} className="md:col-span-2 lg:col-span-5">
             <PaymentToast />
           </ProductTile>
-          <ProductTile tone="sky" className="hidden lg:block">
-            <ReminderToast />
-          </ProductTile>
-          <TestimonialCard {...b} delay={80} />
-          <TestimonialCard {...c} delay={160} className="md:col-span-2 lg:col-span-1" />
         </div>
       </Container>
     </section>
