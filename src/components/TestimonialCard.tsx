@@ -1,44 +1,31 @@
-import { Quote } from 'lucide-react';
 import { Reveal } from './ui/Reveal';
 
 type Props = {
   quote: string;
   name: string;
   role: string;
-  initials: string;
-  hue: string;
+  /** Short outcome tag, e.g. "Saves admin time". */
   theme: string;
-  featured?: boolean;
+  className?: string;
   delay?: number;
 };
 
-export function TestimonialCard({ quote, name, role, initials, hue, theme, featured = false, delay = 0 }: Props) {
+/** Quote card: tinted shell with a soft corner glow, quote on top, name and role at the foot. */
+export function TestimonialCard({ quote, name, role, theme, className = '', delay = 0 }: Props) {
   return (
-    <Reveal
-      as="figure"
-      delay={delay}
-      className={`flex h-full flex-col justify-between gap-8 rounded-[var(--radius-xl)] p-6 sm:p-8 ${featured ? 'bg-ink text-white' : 'border border-line bg-white'}`}
-    >
-      <div className="flex flex-col gap-5">
-        <div className="flex items-center justify-between">
-          <Quote className={`size-6 ${featured ? 'text-green' : 'text-green-ink'}`} strokeWidth={2} aria-hidden="true" />
-          <span className={`rounded-full px-2.5 py-1 text-[12px] font-semibold ${featured ? 'bg-white/10 text-green-soft' : 'bg-green-wash text-green-ink'}`}>
-            {theme}
-          </span>
-        </div>
-        <blockquote className={featured ? 'text-[22px] leading-[1.45] font-semibold tracking-[-0.015em] sm:text-[26px]' : 'text-[17px] leading-[1.6] text-ink'}>
+    <Reveal as="figure" delay={delay} className={`h-full ${className}`}>
+      <div className="flex h-full flex-col justify-between gap-10 rounded-[26px] bg-[#F1F5F3] bg-[radial-gradient(45%_60%_at_100%_0%,rgb(168_197_236/0.35),transparent_70%)] p-7 ring-1 ring-ink/[0.04] sm:p-8">
+        <blockquote className="text-[17px] leading-[1.6] text-ink sm:text-[18px]">
           <p>“{quote}”</p>
         </blockquote>
+        <figcaption className="flex items-end justify-between gap-4">
+          <span>
+            <span className="block text-[16px] font-bold tracking-[-0.01em] text-ink">{name}</span>
+            <span className="mt-1 block text-[14px] text-muted">{role}</span>
+          </span>
+          <span className="shrink-0 rounded-full bg-white px-3 py-1 text-[12px] font-semibold text-green-ink ring-1 ring-green/25">{theme}</span>
+        </figcaption>
       </div>
-      <figcaption className="flex items-center gap-3">
-        <span className="grid size-10 shrink-0 place-items-center rounded-full text-[13px] font-bold text-ink-soft" style={{ background: hue }} aria-hidden="true">
-          {initials}
-        </span>
-        <span className="leading-tight">
-          <span className={`block text-[15px] font-semibold ${featured ? 'text-white' : 'text-ink'}`}>{name}</span>
-          <span className={`block text-[13.5px] ${featured ? 'text-white/60' : 'text-muted'}`}>{role}</span>
-        </span>
-      </figcaption>
     </Reveal>
   );
 }
