@@ -47,7 +47,7 @@ export function Showcase() {
         </Reveal>
 
         <Reveal delay={80} className="mt-10 flex flex-col items-center gap-4">
-          <div role="tablist" aria-label="Product views" onKeyDown={onKey} className="flex max-w-full gap-0.5 overflow-x-auto rounded-full bg-[#F1F5F3] p-1 sm:gap-1 sm:p-1.5 ring-1 ring-ink/[0.05]">
+          <div role="tablist" aria-label="Product views" onKeyDown={onKey} className="flex max-w-full gap-0.5 overflow-x-auto [scrollbar-width:none] sm:overflow-visible [&::-webkit-scrollbar]:hidden rounded-full bg-[#F1F5F3] p-1 sm:gap-1 sm:p-1.5 ring-1 ring-ink/[0.05]">
             {tabs.map((t, i) => {
               const on = i === active;
               return (

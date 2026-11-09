@@ -2,14 +2,14 @@ import { Container } from '../components/ui/Container';
 import { Reveal } from '../components/ui/Reveal';
 import { TestimonialCard } from '../components/TestimonialCard';
 import { testimonials } from '../data/content';
-import teamLaptops from '../assets/photos/team-laptops.webp';
-import clientMeeting from '../assets/photos/client-meeting.webp';
+import headshot1 from '../assets/photos/headshot-1.webp';
+import headshot2 from '../assets/photos/headshot-2.webp';
 
-/** Decorative work photo in the brand duotone. Not tied to any quote or name. */
+/** Decorative headshot in the brand duotone (Unsplash License). Not tied to any quote or name. */
 function PhotoTile({ src, className = '', delay = 0 }: { src: string; className?: string; delay?: number }) {
   return (
     <Reveal delay={delay} className={`h-full ${className}`}>
-      <img src={src} alt="" loading="lazy" decoding="async" className="h-full min-h-[280px] w-full rounded-[26px] object-cover" />
+      <img src={src} alt="" loading="lazy" decoding="async" className="h-full min-h-[280px] w-full rounded-[26px] object-cover object-top" />
     </Reveal>
   );
 }
@@ -32,8 +32,8 @@ export function Testimonials() {
         <div className="mt-14 grid gap-6 sm:mt-16 md:grid-cols-2 lg:auto-rows-[minmax(340px,auto)] lg:grid-cols-12">
           <TestimonialCard {...a} stars className="md:col-span-2 lg:col-span-6" />
           <TestimonialCard {...b} delay={80} className="lg:col-span-3" />
-          <PhotoTile src={teamLaptops} delay={160} className="lg:col-span-3" />
-          <PhotoTile src={clientMeeting} className="hidden lg:col-span-3 lg:block" />
+          <PhotoTile src={headshot1} delay={160} className="lg:col-span-3" />
+          <PhotoTile src={headshot2} className="hidden lg:col-span-3 lg:block" />
           <TestimonialCard {...d} delay={80} className="lg:col-span-3" />
           <TestimonialCard {...c} stars delay={160} className="md:col-span-2 lg:col-span-6" />
         </div>
