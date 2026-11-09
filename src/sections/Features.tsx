@@ -238,11 +238,11 @@ export function Features() {
         </Reveal>
 
         {/*
-          Staggered grid on desktop: cards start at different heights and the
-          tracking card runs two rows tall, so the layout reads as composed
-          rather than as a uniform grid.
+          Bento grid, one 24px gap everywhere. Desktop: three cards on top with
+          payment tracking running two rows tall, then two wide cards that put
+          copy beside the panel. Tablet: two columns. Mobile: one.
         */}
-        <div className="mt-14 grid gap-5 sm:mt-20 md:grid-cols-2 lg:grid-cols-3 lg:gap-6">
+        <div className="mt-14 grid gap-6 sm:mt-20 md:grid-cols-2 lg:grid-cols-3">
           <FeatureCard
             className="lg:col-start-1 lg:row-start-1"
             icon={FileText}
@@ -253,7 +253,7 @@ export function Features() {
             <InvoicePanel />
           </FeatureCard>
           <FeatureCard
-            className="lg:col-start-2 lg:row-start-1 lg:mt-20"
+            className="lg:col-start-2 lg:row-start-1"
             delay={80}
             icon={BellRing}
             glow="bottom-right"
@@ -263,7 +263,7 @@ export function Features() {
             <RemindersPanel />
           </FeatureCard>
           <FeatureCard
-            className="md:col-span-2 lg:col-span-1 lg:col-start-3 lg:row-span-2 lg:row-start-1 lg:mt-8"
+            className="md:col-span-2 lg:col-span-1 lg:col-start-3 lg:row-span-2 lg:row-start-1"
             delay={160}
             icon={Radar}
             glow="top-right"
@@ -286,7 +286,7 @@ export function Features() {
             <ClientsPanel />
           </FeatureCard>
           <FeatureCard
-            className="lg:col-span-2 lg:col-start-2 lg:row-start-3 lg:mt-12"
+            className="lg:col-span-2 lg:col-start-2 lg:row-start-3"
             layout="split"
             delay={80}
             icon={BarChart3}
