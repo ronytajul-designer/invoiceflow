@@ -38,9 +38,9 @@ export function SocialProof() {
         <Reveal className="flex flex-col items-center gap-8 lg:flex-row lg:gap-12">
           <div className="max-w-[300px] shrink-0 text-center lg:max-w-[240px] lg:text-left">
             <h2 id="proof-title" className="text-[17px] leading-[1.5] font-medium text-ink-soft">
-              Built for people who make business happen.
+              Built for people who get paid.
             </h2>
-            <p className="mt-1.5 text-[12px] text-faint">Company names are fictional, shown for illustration.</p>
+            <p className="mt-1.5 text-[12px] text-faint">Sample company names</p>
           </div>
 
           <span className="hidden h-16 w-px shrink-0 bg-line-strong lg:block" aria-hidden="true" />
