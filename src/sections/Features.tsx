@@ -25,7 +25,11 @@ function InvoicePanel() {
     <div className="flex flex-1 flex-col justify-center">
       <p className="text-[12px] text-muted">INV-0418 · Northwind Studio</p>
       <p className="tabular mt-1 text-[30px] leading-tight font-bold tracking-[-0.03em] text-ink">$4,250.00</p>
-      <div className="mt-6 flex items-center justify-between">
+      <p className="mt-4 flex justify-between border-t border-line pt-3 text-[12.5px]">
+        <span className="text-ink-soft">Brand identity system</span>
+        <span className="tabular text-muted">Fixed fee</span>
+      </p>
+      <div className="mt-4 flex items-center justify-between">
         <span className="tabular text-[12.5px] text-muted">Due Nov 30</span>
         <span className="flex h-9 items-center gap-1.5 rounded-full bg-ink px-4 text-[12.5px] font-semibold text-white">
           <Send className="size-3.5" strokeWidth={2.25} />
@@ -37,19 +41,24 @@ function InvoicePanel() {
 }
 
 function RemindersPanel() {
-  const items = ['3 days before due', 'On the due date', '7 days overdue'];
+  const items = [
+    { when: '3 days before due', on: true },
+    { when: 'On the due date', on: true },
+    { when: '7 days overdue', on: true },
+    { when: '14 days overdue', on: false },
+  ];
   return (
     <div className="flex flex-1 flex-col">
       <PanelHeader title="Reminders" aside={<span className="rounded-full bg-green-wash px-2.5 py-0.5 text-[11.5px] font-semibold text-green-ink">Automatic</span>} />
       <ul className="flex flex-col gap-3.5">
-        {items.map((when) => (
+        {items.map(({ when, on }) => (
           <li key={when} className="flex items-center justify-between text-[13px]">
-            <span className="flex items-center gap-2.5 text-ink-soft">
-              <BellRing className="size-4 text-green-ink" strokeWidth={2} />
+            <span className={`flex items-center gap-2.5 ${on ? 'text-ink-soft' : 'text-faint'}`}>
+              <BellRing className={`size-4 ${on ? 'text-green-ink' : 'text-faint'}`} strokeWidth={2} />
               {when}
             </span>
-            <span className="relative h-5 w-[34px] rounded-full bg-green">
-              <span className="absolute top-[3px] left-[17px] size-[14px] rounded-full bg-white shadow-sm" />
+            <span className={`relative h-5 w-[34px] rounded-full ${on ? 'bg-green' : 'bg-line-strong'}`}>
+              <span className={`absolute top-[3px] size-[14px] rounded-full bg-white shadow-sm ${on ? 'left-[17px]' : 'left-[3px]'}`} />
             </span>
           </li>
         ))}
@@ -63,7 +72,6 @@ function ActivityPanel() {
     { inv: invoices[0], status: 'Paid · $4,250', tone: 'text-green-ink' },
     { inv: invoices[1], status: 'Viewed invoice', tone: 'text-pending' },
     { inv: invoices[2], status: 'Reminder sent', tone: 'text-overdue' },
-    { inv: invoices[3], status: 'Paid · $980', tone: 'text-green-ink' },
   ];
   return (
     <div className="flex flex-1 flex-col">
@@ -76,9 +84,9 @@ function ActivityPanel() {
           </span>
         }
       />
-      <ul className="flex flex-1 flex-col justify-around gap-2">
+      <ul className="flex flex-col gap-1">
         {feed.map((f, i) => (
-          <li key={i} className={`flex items-center gap-3 rounded-[14px] px-3 py-3 ${i === 0 ? 'bg-green-wash/70' : ''}`}>
+          <li key={i} className={`flex items-center gap-3 rounded-[14px] px-3 py-2.5 ${i === 0 ? 'bg-green-wash/70' : ''}`}>
             <ClientAvatar invoice={f.inv} size="md" />
             <span className="min-w-0 leading-tight">
               <span className="block truncate text-[13px] font-semibold text-ink">{f.inv.client}</span>
@@ -148,7 +156,7 @@ function ReportPanel() {
   return (
     <div className="flex flex-1 flex-col">
       <PanelHeader title="Collected by quarter" />
-      <div className="flex min-h-28 flex-1 items-end gap-3">
+      <div className="flex h-36 items-end gap-3">
         {q.map((x, i) => (
           <div key={x.label} className="flex h-full flex-1 flex-col items-center justify-end gap-1.5">
             <span className={`w-full max-w-11 rounded-t-[8px] ${i === q.length - 1 ? 'bg-green' : 'bg-ink/10'}`} style={{ height: `${x.v}%` }} />
@@ -181,9 +189,10 @@ export function Features() {
         </Reveal>
 
         {/*
-          Bento grid, one 24px gap everywhere. Desktop: three cards on top with
-          payment tracking running two rows tall, then two wide cards that put
-          copy beside the panel. Tablet: two columns. Mobile: one.
+          Bento grid, one 24px gap everywhere. Desktop: three cards on top, a
+          wide overview beside clients, then reporting across the full width.
+          No card spans rows, so no panel is stretched past its content.
+          Tablet: two columns. Mobile: one.
         */}
         <div className="mt-14 grid gap-6 sm:mt-20 md:grid-cols-2 lg:grid-cols-3">
           <FeatureCard
@@ -204,13 +213,16 @@ export function Features() {
             <RemindersPanel />
           </FeatureCard>
           <FeatureCard
-            className="md:col-span-2 lg:col-span-1 lg:col-start-3 lg:row-span-2 lg:row-start-1"
+            className="lg:col-start-3 lg:row-start-1"
             delay={160}
             glow="top-right"
             title="Real-Time Payment Tracking"
             body="Know exactly which invoices are paid, pending, or overdue, the moment it happens."
           >
             <ActivityPanel />
+          </FeatureCard>
+          <FeatureCard className="lg:col-start-3 lg:row-start-2" glow="top-left" title="Client Management" body="Keep client information, invoice history, and payment records organized.">
+            <ClientsPanel />
           </FeatureCard>
           <FeatureCard
             className="md:col-span-2 lg:col-start-1 lg:row-start-2"
@@ -221,11 +233,8 @@ export function Features() {
           >
             <OverviewPanel />
           </FeatureCard>
-          <FeatureCard className="lg:col-start-1 lg:row-start-3" glow="top-left" title="Client Management" body="Keep client information, invoice history, and payment records organized.">
-            <ClientsPanel />
-          </FeatureCard>
           <FeatureCard
-            className="lg:col-span-2 lg:col-start-2 lg:row-start-3"
+            className="md:col-span-2 lg:col-span-3 lg:col-start-1 lg:row-start-3"
             layout="split"
             delay={80}
             glow="top-right"

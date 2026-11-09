@@ -45,7 +45,9 @@ type Props = {
 /**
  * Feature card: a tinted shell holding the copy, with the product UI on a
  * white inset panel. In the bento grid every card fills its cell and the
- * panel takes the remaining height, so rows line up and gaps stay even.
+ * panel takes the remaining height. Panel content within a row is kept to
+ * similar heights so no panel is left with a large empty area. On wide
+ * "split" cards the panel hugs its content and centres beside the copy.
  * Enters on a spring when scrolled into view; on hover the shell and the
  * panel lift by slightly different amounts for a sense of depth.
  */
@@ -71,7 +73,11 @@ export function FeatureCard({ title, body, children, glow = 'top-right', layout 
           <h3 className="text-[20px] leading-[1.25] font-bold tracking-[-0.02em] text-ink sm:text-[21px]">{title}</h3>
           <p className="max-w-[40ch] text-[15px] leading-[1.6] text-muted">{body}</p>
         </div>
-        <m.div className="flex flex-1 flex-col rounded-[20px] bg-white p-4 sm:p-5" variants={panel} aria-hidden="true">
+        <m.div
+          className={`flex flex-1 flex-col rounded-[20px] bg-white p-4 sm:p-5 ${split ? 'lg:flex-none lg:self-center' : ''}`}
+          variants={panel}
+          aria-hidden="true"
+        >
           {/* Panel content stretches; each panel pins its last row to the bottom with mt-auto. */}
           <div className="flex flex-1 flex-col">{children}</div>
         </m.div>
