@@ -1,81 +1,10 @@
 import { useState } from 'react';
 import { AnimatePresence, m } from 'framer-motion';
-import { Check, Eye, Mail, Send } from 'lucide-react';
 import { Container } from '../components/ui/Container';
 import { Reveal, EASE_OUT_SOFT } from '../components/ui/Reveal';
 import { InvoiceDetailView, InvoicesView, PaymentsView } from '../components/dashboard/ShowcaseViews';
 import { steps } from '../data/content';
 
-/* Small inline previews shown inside the active step card. */
-function CreateCard() {
-  return (
-    <div className="flex flex-col gap-2.5 text-[12px]">
-      {[
-        ['Client', 'Northwind Studio'],
-        ['Service', 'Brand identity system'],
-      ].map(([k, v]) => (
-        <div key={k} className="rounded-[var(--radius-md)] border border-line bg-white px-3 py-2">
-          <span className="block text-[10.5px] font-medium text-faint">{k}</span>
-          <span className="font-semibold text-ink">{v}</span>
-        </div>
-      ))}
-      <div className="flex gap-2.5">
-        <div className="flex-1 rounded-[var(--radius-md)] border border-line bg-white px-3 py-2">
-          <span className="block text-[10.5px] font-medium text-faint">Amount</span>
-          <span className="tabular font-semibold text-ink">$4,250.00</span>
-        </div>
-        <div className="flex-1 rounded-[var(--radius-md)] border border-green bg-white px-3 py-2 ring-3 ring-green/15">
-          <span className="block text-[10.5px] font-medium text-faint">Due in</span>
-          <span className="font-semibold text-ink">14 days</span>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function TrackCard() {
-  const events = [
-    { icon: Send, label: 'Sent to accounts@northwind.studio', time: '9:02' },
-    { icon: Mail, label: 'Delivered', time: '9:02' },
-    { icon: Eye, label: 'Viewed by client', time: '11:47' },
-  ];
-  return (
-    <div className="rounded-[var(--radius-md)] border border-line bg-white p-3">
-      <div className="mb-3 flex items-center justify-between text-[12px]">
-        <span className="font-semibold text-ink">INV-0418</span>
-        <span className="rounded-full bg-pending-wash px-2 py-0.5 text-[11px] font-semibold text-pending">Viewed</span>
-      </div>
-      <ol className="flex flex-col gap-2">
-        {events.map(({ icon: Icon, label, time }) => (
-          <li key={label} className="flex items-center gap-2.5 text-[11.5px]">
-            <Icon className="size-3.5 shrink-0 text-faint" strokeWidth={2.25} />
-            <span className="min-w-0 flex-1 truncate text-ink-soft">{label}</span>
-            <span className="tabular text-faint">{time}</span>
-          </li>
-        ))}
-      </ol>
-    </div>
-  );
-}
-
-function PaidCard() {
-  return (
-    <div className="relative overflow-hidden rounded-[var(--radius-md)] bg-midnight p-4 text-white">
-      <svg className="absolute -top-px -right-px size-24 text-green" viewBox="0 0 104 104" aria-hidden="true">
-        <path d="M0 0H104V104A104 104 0 0 1 0 0Z" fill="currentColor" opacity="0.9" />
-      </svg>
-      <span className="relative grid size-9 place-items-center rounded-full bg-white/10 text-green-soft">
-        <Check className="size-4" strokeWidth={3} />
-      </span>
-      <p className="relative mt-6 text-[11.5px] text-white/60">Paid by card · Nov 12</p>
-      <p className="tabular relative text-[24px] leading-tight font-bold tracking-[-0.02em]">$4,250.00</p>
-      <p className="relative mt-1 text-[11.5px] font-semibold text-green-soft">2 reminders sent automatically</p>
-    </div>
-  );
-}
-
-
-const previews = [<CreateCard key="c" />, <TrackCard key="t" />, <PaidCard key="p" />];
 /* Full product view shown in the large panel for each step. */
 const views = [InvoiceDetailView, InvoicesView, PaymentsView];
 
@@ -95,10 +24,10 @@ export function HowItWorks() {
           </h2>
         </Reveal>
 
-        <div className="mt-14 grid gap-6 sm:mt-16 lg:grid-cols-2">
+        <div className="mt-14 grid gap-8 sm:mt-16 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] lg:gap-12">
           {/* Product panel: brand gradient with the app view cropped by the panel edge. */}
-          <Reveal className="relative order-2 hidden h-[380px] md:block overflow-hidden rounded-[28px] bg-[linear-gradient(180deg,#2FA678_0%,#55C99A_45%,#D3EFE2_100%)] sm:h-[460px] lg:order-1 lg:h-auto lg:min-h-[560px]">
-            <div className="absolute top-16 left-8 w-[980px] sm:top-20 sm:left-12" aria-hidden="true">
+          <Reveal className="relative order-1 h-[360px] overflow-hidden rounded-[28px] bg-[linear-gradient(180deg,#2FA678_0%,#55C99A_45%,#D3EFE2_100%)] sm:h-[460px] lg:h-auto lg:min-h-[560px]">
+            <div className="absolute top-10 left-6 w-[620px] sm:top-16 sm:left-10 sm:w-[980px]" aria-hidden="true">
               <AnimatePresence mode="wait">
                 <m.div
                   key={active}
@@ -113,8 +42,8 @@ export function HowItWorks() {
             </div>
           </Reveal>
 
-          {/* Steps: one open at a time; the open one shows a small preview. */}
-          <ol className="order-1 flex flex-col gap-4 lg:order-2">
+          {/* Steps are text only; the panel is the single visual and follows the selected step. */}
+          <ol className="order-2 flex flex-col justify-center gap-4">
             {steps.map((st, i) => {
               const on = i === active;
               return (
@@ -134,20 +63,6 @@ export function HowItWorks() {
                         <span className="mt-1 block text-[15px] leading-[1.55] text-muted">{st.body}</span>
                       </span>
                     </span>
-                    <AnimatePresence initial={false}>
-                      {on && (
-                        <m.span
-                          className="block overflow-hidden"
-                          initial={{ height: 0, opacity: 0 }}
-                          animate={{ height: 'auto', opacity: 1 }}
-                          exit={{ height: 0, opacity: 0 }}
-                          transition={{ duration: 0.4, ease: EASE_OUT_SOFT }}
-                          aria-hidden="true"
-                        >
-                          <span className="mt-5 block rounded-[18px] bg-white p-4 shadow-[0_10px_30px_-16px_rgb(20_39_70/0.25)]">{previews[i]}</span>
-                        </m.span>
-                      )}
-                    </AnimatePresence>
                   </button>
                 </li>
               );
