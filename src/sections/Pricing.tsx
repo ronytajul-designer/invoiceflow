@@ -1,7 +1,8 @@
 import { useRef, useState, type KeyboardEvent } from 'react';
-import { ShieldCheck } from 'lucide-react';
 import { Container } from '../components/ui/Container';
-import { SectionHeading } from '../components/ui/SectionHeading';
+import { Reveal } from '../components/ui/Reveal';
+import { ButtonLink } from '../components/ui/Button';
+import { LINKS } from '../data/links';
 import { PricingCard } from '../components/PricingCard';
 import { plans } from '../data/content';
 
@@ -54,27 +55,41 @@ function BillingToggle({ yearly, onChange }: { yearly: boolean; onChange: (v: bo
 
 export function Pricing() {
   const [yearly, setYearly] = useState(true);
+  const free = plans.find((p) => p.monthly === 0)!;
+  const paid = plans.filter((p) => p.monthly > 0);
   return (
     <section id="pricing" aria-labelledby="pricing-title" className="bg-white py-20 sm:py-28">
       <Container>
-        <div className="flex flex-col items-center gap-8">
-          <SectionHeading id="pricing-title" align="center" title="Simple pricing. No surprises." lede="Start free and upgrade as your business grows." />
-          <div className="flex flex-col items-center gap-2">
-            <BillingToggle yearly={yearly} onChange={setYearly} />
-            <p className="text-[13px] text-muted" aria-live="polite">
-              {yearly ? 'Yearly billing: two months free.' : 'Monthly billing. Switch to yearly to save 17%.'}
-            </p>
-          </div>
-        </div>
-        <div className="mx-auto mt-12 grid max-w-[440px] gap-4 lg:mt-16 lg:max-w-none lg:grid-cols-3 lg:items-stretch lg:gap-5">
-          {plans.map((p, i) => (
+        <Reveal className="mx-auto flex max-w-[680px] flex-col items-center gap-5 text-center">
+          <h2 id="pricing-title" className="text-[34px] leading-[1.08] font-bold tracking-[-0.035em] text-ink sm:text-[46px] lg:text-[54px]">
+            Simple pricing. No surprises.
+          </h2>
+          <p className="text-[17px] leading-[1.6] text-muted sm:text-[18px]">Start free and upgrade as your business grows.</p>
+        </Reveal>
+        <Reveal delay={80} className="mt-8 flex flex-col items-center gap-2">
+          <BillingToggle yearly={yearly} onChange={setYearly} />
+          <p className="text-[13px] text-muted" aria-live="polite">
+            {yearly ? 'Two months free with yearly billing.' : 'Save 17% with yearly billing.'}
+          </p>
+        </Reveal>
+
+        <div className="mx-auto mt-12 grid max-w-[1080px] gap-6 lg:mt-14 lg:grid-cols-2">
+          {paid.map((p, i) => (
             <PricingCard key={p.name} plan={p} yearly={yearly} delay={i * 80} />
           ))}
         </div>
-        <p className="mt-10 flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-center text-[14px] text-muted">
-          <ShieldCheck className="size-4 text-green-ink" strokeWidth={2} aria-hidden="true" />
-          Prices in USD. Change or cancel your plan anytime from settings.
-        </p>
+
+        {/* Free plan as a quiet strip: always available, never competing with the paid cards. */}
+        <Reveal delay={160} className="mx-auto mt-6 max-w-[1080px]">
+          <div className="flex flex-col items-start justify-between gap-4 rounded-[22px] px-6 py-5 ring-1 ring-line sm:flex-row sm:items-center">
+            <p className="text-[15px] text-ink-soft">
+              <span className="font-bold text-ink">Just starting?</span> {free.name} for up to 5 invoices a month, with client management and payment tracking.
+            </p>
+            <ButtonLink href={`${LINKS.signup}?plan=free`} variant="secondary" size="md" className="shrink-0">
+              {free.cta}
+            </ButtonLink>
+          </div>
+        </Reveal>
       </Container>
     </section>
   );
