@@ -10,7 +10,6 @@ export function Testimonials() {
       <Container>
         <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
           <SectionHeading id="testimonials-title" eyebrow="Stories" title="Less admin. More time for what matters." />
-          <p className="shrink-0 text-[13px] text-faint sm:pb-2">Illustrative sample testimonials, not real customers.</p>
         </div>
         <div className="mt-12 grid gap-4 lg:grid-cols-[minmax(0,1.25fr)_minmax(0,1fr)] lg:gap-5">
           <TestimonialCard {...lead} featured />

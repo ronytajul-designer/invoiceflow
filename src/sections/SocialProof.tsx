@@ -40,7 +40,6 @@ export function SocialProof() {
             <h2 id="proof-title" className="text-[17px] leading-[1.5] font-medium text-ink-soft">
               Built for people who get paid.
             </h2>
-            <p className="mt-1.5 text-[12px] text-faint">Sample company names</p>
           </div>
 
           <span className="hidden h-16 w-px shrink-0 bg-line-strong lg:block" aria-hidden="true" />
