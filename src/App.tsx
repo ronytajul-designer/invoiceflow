@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { LazyMotion, MotionConfig, domAnimation } from 'framer-motion';
+import { LazyMotion, MotionConfig, domMax } from 'framer-motion';
 import { initSmoothScroll } from './lib/smoothScroll';
 import { Header } from './sections/Header';
 import { Hero } from './sections/Hero';
@@ -16,10 +16,10 @@ import { Footer } from './sections/Footer';
 export default function App() {
   useEffect(() => initSmoothScroll(), []);
   return (
-    // LazyMotion loads only the DOM animation features we use (smaller bundle);
+    // LazyMotion loads DOM animation plus layout features (domMax: the Showcase tab pill uses layoutId);
     // "strict" makes any accidental full `motion.*` import an error.
     // reducedMotion "user" honours the OS reduced-motion setting everywhere.
-    <LazyMotion features={domAnimation} strict>
+    <LazyMotion features={domMax} strict>
       <MotionConfig reducedMotion="user">
       <Header />
       <main id="main">
