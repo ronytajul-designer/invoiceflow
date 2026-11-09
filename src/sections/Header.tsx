@@ -87,7 +87,7 @@ export function Header() {
           <a href={LINKS.login} className="hidden rounded-md px-3 py-2 text-[15px] font-semibold text-ink transition-colors hover:text-green-ink sm:inline-block">
             Log In
           </a>
-          <ButtonLink href={LINKS.signup} size="sm" className="hidden sm:inline-flex">
+          <ButtonLink href={LINKS.signup} size="sm" variant="dark" shape="pill" className="hidden sm:inline-flex">
             Start Free Trial
           </ButtonLink>
           <button

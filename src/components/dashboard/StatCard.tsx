@@ -20,7 +20,7 @@ export function StatCard({ label, value, meta, icon: Icon, tone = 'default' }: P
       <div className="flex items-center justify-between gap-2">
         <span className="truncate text-[11.5px] font-medium text-muted">{label}</span>
         <span
-          className={`grid size-6 shrink-0 place-items-center rounded-md ${tone === 'warning' ? 'bg-overdue-wash text-overdue' : tone === 'positive' ? 'bg-green-wash text-green-ink' : 'bg-paper text-ink-soft'}`}
+          className={`hidden size-6 shrink-0 place-items-center rounded-md @sm:grid ${tone === 'warning' ? 'bg-overdue-wash text-overdue' : tone === 'positive' ? 'bg-green-wash text-green-ink' : 'bg-paper text-ink-soft'}`}
         >
           <Icon className="size-3.5" strokeWidth={2} aria-hidden="true" />
         </span>

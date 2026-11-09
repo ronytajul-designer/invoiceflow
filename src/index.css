@@ -126,3 +126,18 @@
 .animate-view-in {
   animation: view-in 450ms var(--ease-out-soft) both;
 }
+
+/* Hero chips drift slowly; disabled by the reduced-motion rule above. */
+@keyframes drift {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+.animate-drift {
+  animation: drift 6s ease-in-out infinite;
+  animation-delay: var(--drift-delay, 0s);
+}
