@@ -72,6 +72,9 @@ function ActivityPanel() {
     { inv: invoices[0], status: 'Paid · $4,250', tone: 'text-green-ink' },
     { inv: invoices[1], status: 'Viewed invoice', tone: 'text-pending' },
     { inv: invoices[2], status: 'Reminder sent', tone: 'text-overdue' },
+    { inv: invoices[3], status: 'Paid · $980', tone: 'text-green-ink' },
+    { inv: invoices[4], status: 'Invoice sent', tone: 'text-muted' },
+    { inv: invoices[5], status: 'Viewed invoice', tone: 'text-pending' },
   ];
   return (
     <div className="flex flex-1 flex-col">
@@ -84,13 +87,13 @@ function ActivityPanel() {
           </span>
         }
       />
-      <ul className="flex flex-col gap-1">
+      <ul className="flex flex-1 flex-col justify-between gap-1">
         {feed.map((f, i) => (
           <li key={i} className={`flex items-center gap-3 rounded-[14px] px-3 py-2.5 ${i === 0 ? 'bg-green-wash/70' : ''}`}>
             <ClientAvatar invoice={f.inv} size="md" />
-            <span className="min-w-0 leading-tight">
-              <span className="block truncate text-[13px] font-semibold text-ink">{f.inv.client}</span>
-              <span className={`block text-[12px] ${f.tone}`}>{f.status}</span>
+            <span className="min-w-0">
+              <span className="block truncate text-[13.5px] leading-5 font-semibold text-ink">{f.inv.client}</span>
+              <span className={`mt-1 block text-[12.5px] leading-4 ${f.tone}`}>{f.status}</span>
             </span>
           </li>
         ))}
@@ -189,12 +192,12 @@ export function Features() {
         </Reveal>
 
         {/*
-          Bento grid, one 24px gap everywhere. Desktop: three cards on top, a
-          wide overview beside clients, then reporting across the full width.
-          No card spans rows, so no panel is stretched past its content.
-          Tablet: two columns. Mobile: one.
+          Bento grid, one 24px gap everywhere. Desktop: three cards on top with
+          payment tracking running two rows tall; rows 2 and 3 share one height
+          (1fr each), so the overview matches reporting and the tracking card
+          ends level with the overview. Tablet: two columns. Mobile: one.
         */}
-        <div className="mt-14 grid gap-6 sm:mt-20 md:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-14 grid gap-6 sm:mt-20 md:grid-cols-2 lg:grid-cols-3 lg:grid-rows-[auto_1fr_1fr]">
           <FeatureCard
             className="lg:col-start-1 lg:row-start-1"
             glow="top-left"
@@ -213,7 +216,7 @@ export function Features() {
             <RemindersPanel />
           </FeatureCard>
           <FeatureCard
-            className="lg:col-start-3 lg:row-start-1"
+            className="md:col-span-2 lg:col-span-1 lg:col-start-3 lg:row-span-2 lg:row-start-1"
             delay={160}
             glow="top-right"
             title="Real-Time Payment Tracking"
@@ -221,7 +224,7 @@ export function Features() {
           >
             <ActivityPanel />
           </FeatureCard>
-          <FeatureCard className="lg:col-start-3 lg:row-start-2" glow="top-left" title="Client Management" body="Keep client information, invoice history, and payment records organized.">
+          <FeatureCard className="lg:col-start-1 lg:row-start-3" glow="top-left" title="Client Management" body="Keep client information, invoice history, and payment records organized.">
             <ClientsPanel />
           </FeatureCard>
           <FeatureCard
@@ -234,7 +237,7 @@ export function Features() {
             <OverviewPanel />
           </FeatureCard>
           <FeatureCard
-            className="md:col-span-2 lg:col-span-3 lg:col-start-1 lg:row-start-3"
+            className="lg:col-span-2 lg:col-start-2 lg:row-start-3"
             layout="split"
             delay={80}
             glow="top-right"
