@@ -12,6 +12,7 @@ import { Pricing } from './sections/Pricing';
 import { FAQ } from './sections/FAQ';
 import { FinalCta } from './sections/FinalCta';
 import { Footer } from './sections/Footer';
+import { BackToTop } from './components/BackToTop';
 
 export default function App() {
   useEffect(() => initSmoothScroll(), []);
@@ -22,7 +23,7 @@ export default function App() {
     <LazyMotion features={domMax} strict>
       <MotionConfig reducedMotion="user">
       <Header />
-      <main id="main">
+      <main id="main" tabIndex={-1} className="outline-none">
         <Hero />
         <SocialProof />
         <Features />
@@ -34,6 +35,7 @@ export default function App() {
         <FinalCta />
       </main>
       <Footer />
+      <BackToTop />
       </MotionConfig>
     </LazyMotion>
   );
