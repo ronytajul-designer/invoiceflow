@@ -85,7 +85,7 @@ export function Hero() {
 
             <Reveal delay={220}>
               {/* Glass frame; the panel's bottom edge crops the product shot. */}
-              <div className="h-[440px] overflow-hidden rounded-t-[22px] border border-b-0 border-white/80 bg-white/40 p-2 text-left shadow-[0_-8px_40px_-12px_rgb(11_25_48/0.18)] backdrop-blur-md sm:h-[480px] sm:rounded-t-[28px] sm:p-3 lg:h-[560px]">
+              <div className="h-[440px] overflow-hidden rounded-t-[22px] border border-b-0 border-white/80 bg-white/50 p-2 text-left shadow-[0_-8px_40px_-12px_rgb(11_25_48/0.18)] sm:h-[480px] sm:rounded-t-[28px] sm:p-3 lg:h-[560px]">
                 <DashboardPreview />
               </div>
             </Reveal>

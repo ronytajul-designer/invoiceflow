@@ -4,6 +4,7 @@ import { Container } from '../components/ui/Container';
 import { Logo } from '../components/ui/Logo';
 import { ButtonLink } from '../components/ui/Button';
 import { LINKS } from '../data/links';
+import { getLenis, scrollToAnchor } from '../lib/smoothScroll';
 
 const links = [
   { href: '#features', label: 'Features' },
@@ -36,6 +37,7 @@ export function Header() {
     };
     document.addEventListener('keydown', onKey);
     document.body.style.overflow = 'hidden';
+    getLenis()?.stop();
     panelRef.current?.querySelector<HTMLElement>('a')?.focus();
     const mq = window.matchMedia('(min-width: 1024px)');
     const onMq = () => mq.matches && setOpen(false);
@@ -43,6 +45,7 @@ export function Header() {
     return () => {
       document.removeEventListener('keydown', onKey);
       document.body.style.overflow = '';
+      getLenis()?.start();
       mq.removeEventListener('change', onMq);
     };
   }, [open]);
@@ -51,10 +54,7 @@ export function Header() {
   const goTo = (e: React.MouseEvent, href: string) => {
     e.preventDefault();
     setOpen(false);
-    requestAnimationFrame(() => {
-      document.querySelector(href)?.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
-      history.replaceState(null, '', href);
-    });
+    requestAnimationFrame(() => scrollToAnchor(href));
   };
 
   return (
