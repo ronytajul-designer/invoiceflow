@@ -7,7 +7,7 @@ Method: render the page at 2x, make each label transparent, screenshot the butto
 | Button | Label colour | Worst case (rest) | Worst case (hover) | Result |
 |---|---|---|---|---|
 | `.btn-glow` (primary) | Midnight `#0B1930` | 8.44:1 | 8.43:1 | AAA |
-| `.btn-glass` (secondary) | Deep Navy `#142746` | 11.44:1 | 12.61:1 | AAA |
+| `.btn-glass` (secondary) | Deep Navy `#142746` | 14.14:1 | 14.88:1 | AAA |
 | `.btn-aurora` (header) | White | 12.74:1 | 12.74:1 | AAA |
 
 AA for normal text needs 4.5:1; AAA needs 7:1.
