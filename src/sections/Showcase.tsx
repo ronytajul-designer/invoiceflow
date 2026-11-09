@@ -97,10 +97,12 @@ export function Showcase() {
             />
             <ArcMotif className="absolute -top-px right-0 -z-10 w-[640px] lg:w-[860px]" stroke="rgb(255 255 255 / 0.9)" />
 
-            <div className="absolute inset-x-4 top-10 sm:inset-x-10 sm:top-14 lg:inset-x-20 lg:top-16" aria-hidden="true">
+            {/* The app frame runs past the panel's bottom edge, so every view reads as cropped, with more below. */}
+            <div className="absolute inset-x-4 top-10 -bottom-24 sm:inset-x-10 sm:top-14 lg:inset-x-20 lg:top-16" aria-hidden="true">
               <AnimatePresence mode="wait">
                 <m.div
                   key={tab.id}
+                  className="h-full [&>div]:h-full [&>div>div]:h-full"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -10 }}

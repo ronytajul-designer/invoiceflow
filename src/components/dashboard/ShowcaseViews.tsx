@@ -199,9 +199,9 @@ export function AnalyticsView() {
   ] as const;
   return (
     <AppFrame active="Reports" title="Reports" subtitle="Jan 1 to Nov 30, 2026">
-      <div className="grid grid-cols-3 gap-2.5 @3xl:gap-4">
-        {kpis.map(([l, v, d]) => (
-          <div key={l} className="min-w-0 rounded-[var(--radius-lg)] border border-line bg-white p-3 @3xl:p-4">
+      <div className="grid grid-cols-2 gap-2.5 @xl:grid-cols-3 @3xl:gap-4">
+        {kpis.map(([l, v, d], i) => (
+          <div key={l} className={`min-w-0 rounded-[var(--radius-lg)] border border-line bg-white p-3 @3xl:p-4 ${i === 2 ? 'hidden @xl:block' : ''}`}>
             <p className="truncate text-[11px] text-muted">{l}</p>
             <p className="tabular mt-1 truncate text-[15px] font-bold tracking-[-0.02em] text-ink @3xl:text-[20px]">{v}</p>
             <p className="tabular text-[11px] font-semibold text-green-ink">{d}</p>
