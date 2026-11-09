@@ -68,10 +68,11 @@ export function HowItWorks() {
         <div ref={ref} className="mt-14 grid gap-8 sm:mt-16 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] lg:gap-24">
           {/* Product panel: brand gradient with the app view cropped by the panel edge. */}
           <Reveal className="relative order-1 h-[360px] overflow-hidden rounded-[28px] bg-[linear-gradient(180deg,#2FA678_0%,#55C99A_45%,#D3EFE2_100%)] sm:h-[460px] lg:h-auto lg:min-h-[560px]">
-            <div className="absolute top-10 left-6 w-[620px] sm:top-16 sm:left-10 sm:w-[980px]" aria-hidden="true">
+            <div className="absolute top-10 -bottom-24 left-6 w-[620px] sm:top-16 sm:left-10 sm:w-[980px]" aria-hidden="true">
               <AnimatePresence mode="wait">
                 <m.div
                   key={active}
+                  className="h-full [&>div]:h-full [&>div>div]:h-full"
                   initial={{ opacity: 0, y: 16 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -8 }}

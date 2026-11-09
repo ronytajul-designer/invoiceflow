@@ -68,7 +68,7 @@ export function Showcase() {
                     <m.span
                       layoutId="showcase-pill"
                       className="absolute inset-0 rounded-full bg-white shadow-[0_1px_2px_rgb(20_39_70/0.06),0_6px_16px_-8px_rgb(20_39_70/0.25)]"
-                      transition={{ duration: 0.3, ease: EASE_OUT_SOFT }}
+                      transition={{ duration: 0.5, ease: [0.34, 1.45, 0.64, 1] }}
                     />
                   )}
                   <t.icon className={`relative hidden size-4 sm:block ${on ? 'text-green-ink' : ''}`} strokeWidth={2} aria-hidden="true" />

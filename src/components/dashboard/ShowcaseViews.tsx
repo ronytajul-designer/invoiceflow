@@ -245,6 +245,9 @@ export function PaidListView() {
     { inv: invoices[1], method: 'Card', when: 'Nov 8' },
     { inv: invoices[4], method: 'Bank transfer', when: 'Nov 5' },
     { inv: invoices[2], method: 'Card', when: 'Nov 3' },
+    { inv: invoices[5], method: 'Card', when: 'Nov 1' },
+    { inv: invoices[0], method: 'Bank transfer', when: 'Oct 29' },
+    { inv: invoices[1], method: 'Card', when: 'Oct 26' },
   ];
   return (
     <AppFrame active="Payments" title="Payments" subtitle="$31,280 received this month">

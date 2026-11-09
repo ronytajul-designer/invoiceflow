@@ -42,6 +42,8 @@
   --shadow-product: 0 1px 1px rgb(11 25 48 / 0.04), 0 12px 24px -8px rgb(11 25 48 / 0.12), 0 48px 96px -24px rgb(11 25 48 / 0.24);
 
   --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+  /* Slight overshoot for sliding toggles, so the pill settles with a little give. */
+  --ease-elastic: cubic-bezier(0.34, 1.45, 0.64, 1);
 }
 
 @layer base {

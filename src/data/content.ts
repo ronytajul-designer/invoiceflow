@@ -47,6 +47,14 @@ export const testimonials = [
     hue: '#E3F5EC',
     theme: 'Fewer late payments',
   },
+  {
+    quote: 'Setup took one evening. I imported my clients, picked a template and sent my first invoice before dinner.',
+    name: 'Marcus Lee',
+    role: 'IT consultant',
+    initials: 'ML',
+    hue: '#F3E8FD',
+    theme: 'Quick to set up',
+  },
 ];
 
 export type Plan = {

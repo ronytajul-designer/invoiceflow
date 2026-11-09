@@ -23,7 +23,7 @@ function BillingToggle({ yearly, onChange }: { yearly: boolean; onChange: (v: bo
     <div role="radiogroup" aria-label="Billing period" onKeyDown={onKey} className="relative grid grid-cols-2 rounded-full border border-line bg-white p-1">
       <span
         aria-hidden="true"
-        className={`absolute top-1 bottom-1 left-1 w-[calc(50%-4px)] rounded-full bg-ink transition-transform duration-300 ease-[var(--ease-out-soft)] ${yearly ? 'translate-x-full' : ''}`}
+        className={`absolute top-1 bottom-1 left-1 w-[calc(50%-4px)] rounded-full bg-ink transition-transform duration-500 ease-[var(--ease-elastic)] ${yearly ? 'translate-x-full' : ''}`}
       />
       {options.map((o, i) => {
         const on = yearly === o.value;
