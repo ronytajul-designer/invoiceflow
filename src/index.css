@@ -225,3 +225,23 @@
     animation: none !important;
   }
 }
+
+/* How It Works: progress fill for the active step (duration and pause set inline). */
+@keyframes step-progress {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+.step-progress {
+  animation-name: step-progress;
+  animation-timing-function: linear;
+  animation-fill-mode: both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .step-progress {
+    animation: none !important;
+  }
+}

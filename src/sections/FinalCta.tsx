@@ -68,9 +68,9 @@ export function FinalCta() {
                 }}
                 aria-invalid={error}
                 aria-describedby="cta-msg"
-                className="h-12 min-w-0 flex-1 rounded-full bg-transparent px-5 text-[16px] text-ink outline-none placeholder:text-faint"
+                className="h-14 min-w-0 shrink-0 rounded-full bg-[#F4F8F6] sm:flex-1 sm:shrink px-5 text-[16px] text-ink outline-none placeholder:text-faint focus:bg-white focus:ring-2 focus:ring-green/50 sm:h-12 sm:bg-transparent sm:focus:ring-0"
               />
-              <Button type="submit" size="md" className="shrink-0">
+              <Button type="submit" size="lg" className="shrink-0 sm:!h-12">
                 Start Free Trial
                 <ArrowRight className="size-4" strokeWidth={2.5} />
               </Button>
