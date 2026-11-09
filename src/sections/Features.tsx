@@ -1,53 +1,33 @@
-import { BellRing, Plus, Send } from 'lucide-react';
+import { BellRing, Send } from 'lucide-react';
 import { Container } from '../components/ui/Container';
 import { Reveal } from '../components/ui/Reveal';
 import { FeatureCard } from '../components/FeatureTile';
 import { ClientAvatar } from '../components/dashboard/InvoiceTable';
 import { invoices, usd } from '../data/dashboard';
 
-/* ---- Inset panel content, one per feature (sample data, fictional clients) ---- */
+/*
+ * Inset panels. Each one makes a single point with one focal element
+ * (an amount, a chart, a status) and at most four supporting rows, so a
+ * visitor can read the card at a glance. Sample data, fictional clients.
+ */
+
+function PanelHeader({ title, aside }: { title: string; aside?: React.ReactNode }) {
+  return (
+    <div className="mb-4 flex items-center justify-between">
+      <span className="text-[14px] font-semibold text-ink">{title}</span>
+      {aside}
+    </div>
+  );
+}
 
 function InvoicePanel() {
   return (
-    <div className="flex flex-1 flex-col gap-4">
-      <div className="flex items-start justify-between">
-        <div>
-          <p className="text-[11px] text-faint">Invoice</p>
-          <p className="tabular text-[17px] font-bold text-ink">INV-0418</p>
-        </div>
-        <span className="flex items-center gap-1.5 rounded-full border border-line px-2.5 py-1 text-[11.5px] font-semibold text-ink-soft">
-          <span className="size-3 rounded-[3px] bg-ink" />
-          Your logo
-        </span>
-      </div>
-      <dl className="grid grid-cols-2 gap-3 rounded-[12px] bg-paper px-3 py-2.5 text-[11.5px]">
-        <div>
-          <dt className="text-faint">Billed to</dt>
-          <dd className="font-semibold text-ink">Northwind Studio</dd>
-        </div>
-        <div>
-          <dt className="text-faint">Due</dt>
-          <dd className="tabular font-semibold text-ink">Nov 30, 2026</dd>
-        </div>
-      </dl>
-      <ul className="flex flex-col gap-2.5 text-[12.5px]">
-        {[
-          ['Brand identity system', 3200],
-          ['Website design, 4 pages', 850],
-          ['Revisions round', 200],
-        ].map(([l, v]) => (
-          <li key={l as string} className="flex items-center justify-between">
-            <span className="flex items-center gap-2 text-ink-soft">
-              <span className="size-1.5 rounded-full bg-green" />
-              {l}
-            </span>
-            <span className="tabular text-muted">{usd(v as number)}</span>
-          </li>
-        ))}
-      </ul>
-      <div className="mt-auto flex items-center justify-between border-t border-line pt-3">
-        <span className="tabular text-[18px] font-bold text-ink">$4,250.00</span>
-        <span className="flex h-8 items-center gap-1.5 rounded-full bg-ink px-3.5 text-[12px] font-semibold text-white">
+    <div className="flex flex-1 flex-col justify-center">
+      <p className="text-[12px] text-muted">INV-0418 · Northwind Studio</p>
+      <p className="tabular mt-1 text-[30px] leading-tight font-bold tracking-[-0.03em] text-ink">$4,250.00</p>
+      <div className="mt-6 flex items-center justify-between">
+        <span className="tabular text-[12.5px] text-muted">Due Nov 30</span>
+        <span className="flex h-9 items-center gap-1.5 rounded-full bg-ink px-4 text-[12.5px] font-semibold text-white">
           <Send className="size-3.5" strokeWidth={2.25} />
           Send invoice
         </span>
@@ -57,142 +37,104 @@ function InvoicePanel() {
 }
 
 function RemindersPanel() {
-  const items = [
-    { when: '3 days before due', on: true },
-    { when: 'On the due date', on: true },
-    { when: '7 days overdue', on: true },
-  ];
+  const items = ['3 days before due', 'On the due date', '7 days overdue'];
   return (
-    <div className="flex flex-1 flex-col gap-3">
-      <div className="flex items-center justify-between">
-        <span className="text-[14px] font-semibold text-ink">Reminder schedule</span>
-        <span className="text-[11.5px] font-semibold text-green-ink">Edit</span>
-      </div>
-      <div className="rounded-[14px] bg-paper p-3">
-        <p className="text-[11px] font-semibold text-pending">Halcyon &amp; Co. · INV-0417</p>
-        <p className="mt-1 text-[12.5px] leading-[1.5] text-ink-soft">“Hi Lena, a friendly heads-up that $2,800 is due on Nov 24.”</p>
-      </div>
-      <ul className="flex flex-col gap-2">
-        {items.map((it) => (
-          <li key={it.when} className="flex items-center justify-between text-[12.5px]">
-            <span className="flex items-center gap-2 text-ink-soft">
-              <BellRing className="size-3.5 text-green-ink" strokeWidth={2.25} />
-              {it.when}
+    <div className="flex flex-1 flex-col">
+      <PanelHeader title="Reminders" aside={<span className="rounded-full bg-green-wash px-2.5 py-0.5 text-[11.5px] font-semibold text-green-ink">Automatic</span>} />
+      <ul className="flex flex-col gap-3.5">
+        {items.map((when) => (
+          <li key={when} className="flex items-center justify-between text-[13px]">
+            <span className="flex items-center gap-2.5 text-ink-soft">
+              <BellRing className="size-4 text-green-ink" strokeWidth={2} />
+              {when}
             </span>
-            <span className="relative h-[18px] w-[30px] rounded-full bg-green">
-              <span className="absolute top-[2px] left-[14px] size-[14px] rounded-full bg-white shadow-sm" />
+            <span className="relative h-5 w-[34px] rounded-full bg-green">
+              <span className="absolute top-[3px] left-[17px] size-[14px] rounded-full bg-white shadow-sm" />
             </span>
           </li>
         ))}
       </ul>
-      <span className="mt-auto flex h-9 items-center justify-center gap-1.5 rounded-[12px] border border-dashed border-green/60 bg-green-wash/50 text-[12px] font-semibold text-green-ink">
-        <Plus className="size-3.5" strokeWidth={2.5} />
-        Add reminder
-      </span>
     </div>
   );
 }
 
 function ActivityPanel() {
   const feed = [
-    { inv: invoices[0], what: 'Paid', detail: '+$4,250.00', tone: 'text-green-ink', time: '9:42' },
-    { inv: invoices[1], what: 'Viewed invoice', detail: 'INV-0417', tone: 'text-pending', time: '9:30' },
-    { inv: invoices[2], what: 'Reminder sent', detail: '3 days overdue', tone: 'text-overdue', time: '9:00' },
-    { inv: invoices[3], what: 'Paid', detail: '+$980.00', tone: 'text-green-ink', time: 'Yesterday' },
-    { inv: invoices[4], what: 'Invoice sent', detail: 'INV-0414', tone: 'text-muted', time: 'Yesterday' },
-    { inv: invoices[5], what: 'Draft saved', detail: 'INV-0413', tone: 'text-muted', time: 'Mon' },
-    { inv: invoices[1], what: 'Reminder scheduled', detail: 'Nov 21', tone: 'text-pending', time: 'Mon' },
+    { inv: invoices[0], status: 'Paid · $4,250', tone: 'text-green-ink' },
+    { inv: invoices[1], status: 'Viewed invoice', tone: 'text-pending' },
+    { inv: invoices[2], status: 'Reminder sent', tone: 'text-overdue' },
+    { inv: invoices[3], status: 'Paid · $980', tone: 'text-green-ink' },
   ];
   return (
-    <div className="flex flex-1 flex-col gap-3">
-      <div className="flex items-center justify-between">
-        <span className="flex items-center gap-2 text-[14px] font-semibold text-ink">
-          Payment activity
-          <span className="grid size-5 place-items-center rounded-full bg-green text-[10.5px] font-bold text-midnight">2</span>
-        </span>
-        <span className="flex items-center gap-1.5 text-[11px] font-semibold text-green-ink">
-          <span className="size-1.5 animate-pulse rounded-full bg-green" />
-          Live
-        </span>
-      </div>
-      <ul className="flex flex-col gap-1">
+    <div className="flex flex-1 flex-col">
+      <PanelHeader
+        title="Payment activity"
+        aside={
+          <span className="flex items-center gap-1.5 text-[11.5px] font-semibold text-green-ink">
+            <span className="size-1.5 animate-pulse rounded-full bg-green" />
+            Live
+          </span>
+        }
+      />
+      <ul className="flex flex-1 flex-col justify-around gap-2">
         {feed.map((f, i) => (
-          <li key={i} className={`flex items-center gap-3 rounded-[12px] px-2.5 py-2.5 ${i === 0 ? 'bg-green-wash/60' : ''}`}>
+          <li key={i} className={`flex items-center gap-3 rounded-[14px] px-3 py-3 ${i === 0 ? 'bg-green-wash/70' : ''}`}>
             <ClientAvatar invoice={f.inv} size="md" />
-            <span className="min-w-0 flex-1 leading-tight">
-              <span className="block truncate text-[12.5px] font-semibold text-ink">{f.inv.client}</span>
-              <span className={`block truncate text-[11.5px] ${f.tone}`}>
-                {f.what} · <span className="tabular">{f.detail}</span>
-              </span>
+            <span className="min-w-0 leading-tight">
+              <span className="block truncate text-[13px] font-semibold text-ink">{f.inv.client}</span>
+              <span className={`block text-[12px] ${f.tone}`}>{f.status}</span>
             </span>
-            <span className="tabular shrink-0 text-[11px] text-faint">{f.time}</span>
           </li>
         ))}
       </ul>
-      <span className="mt-auto border-t border-line pt-3 text-center text-[12px] font-semibold text-green-ink">View all activity →</span>
     </div>
   );
 }
 
 function OverviewPanel() {
   const parts = [
-    { label: 'Paid', amount: 31280, n: 14, pct: 63, color: 'bg-green', dot: 'bg-green' },
-    { label: 'Pending', amount: 12330, n: 7, pct: 25, color: 'bg-pending', dot: 'bg-pending' },
-    { label: 'Overdue', amount: 6120, n: 2, pct: 12, color: 'bg-overdue', dot: 'bg-overdue' },
+    { label: 'Paid', pct: 63, color: 'bg-green' },
+    { label: 'Pending', pct: 25, color: 'bg-pending' },
+    { label: 'Overdue', pct: 12, color: 'bg-overdue' },
   ];
   return (
-    <div className="flex flex-1 flex-col gap-4">
-      <div className="flex items-start justify-between">
-        <div>
-          <p className="text-[11px] text-faint">Invoiced this month</p>
-          <p className="tabular text-[22px] leading-tight font-bold tracking-[-0.02em] text-ink">$49,730</p>
-        </div>
-        <span className="rounded-full border border-line px-2.5 py-1 text-[11.5px] font-semibold text-ink-soft">November</span>
-      </div>
-      <ul className="flex flex-col gap-2.5 text-[12.5px]">
-        {parts.map((p) => (
-          <li key={p.label} className="flex items-center justify-between">
-            <span className="flex items-center gap-2 font-semibold text-ink">
-              <span className={`size-2 rounded-full ${p.dot}`} />
-              {p.label}
-            </span>
-            <span className="tabular text-muted">
-              {usd(p.amount)} · {p.n} invoices
-            </span>
-          </li>
-        ))}
-      </ul>
-      <div className="mt-auto flex h-2.5 gap-1">
+    <div className="flex flex-1 flex-col justify-center">
+      <p className="text-[12px] text-muted">Invoiced this month</p>
+      <p className="tabular mt-1 text-[30px] leading-tight font-bold tracking-[-0.03em] text-ink">$49,730</p>
+      <div className="mt-5 flex h-2.5 gap-1">
         {parts.map((p) => (
           <span key={p.label} className={`${p.color} rounded-full`} style={{ width: `${p.pct}%` }} />
         ))}
       </div>
+      <ul className="mt-3 flex flex-wrap gap-x-5 gap-y-1.5 text-[12.5px]">
+        {parts.map((p) => (
+          <li key={p.label} className="flex items-center gap-1.5 text-ink-soft">
+            <span className={`size-2 rounded-full ${p.color}`} />
+            {p.label}
+            <span className="tabular text-muted">{p.pct}%</span>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
 
 function ClientsPanel() {
   const rows = [
-    { inv: invoices[0], count: 14, balance: 0 },
-    { inv: invoices[1], count: 6, balance: 2800 },
-    { inv: invoices[2], count: 9, balance: 6120 },
+    { inv: invoices[0], balance: 0 },
+    { inv: invoices[1], balance: 2800 },
+    { inv: invoices[2], balance: 6120 },
   ];
   return (
-    <div className="flex flex-col gap-3">
-      <span className="text-[14px] font-semibold text-ink">Clients</span>
-      <ul className="flex flex-col divide-y divide-line">
-        {rows.map((r) => (
-          <li key={r.inv.id} className="flex items-center gap-3 py-2.5 text-[12.5px] first:pt-0 last:pb-0">
-            <ClientAvatar invoice={r.inv} size="md" />
-            <span className="min-w-0 flex-1 leading-tight">
-              <span className="block truncate font-semibold text-ink">{r.inv.client}</span>
-              <span className="block text-[11px] text-muted">{r.count} invoices</span>
-            </span>
-            <span className={`tabular font-semibold ${r.balance ? 'text-ink' : 'text-green-ink'}`}>{r.balance ? usd(r.balance) : 'Settled'}</span>
-          </li>
-        ))}
-      </ul>
-    </div>
+    <ul className="flex flex-1 flex-col justify-center gap-3.5">
+      {rows.map((r) => (
+        <li key={r.inv.id} className="flex items-center gap-3 text-[13px]">
+          <ClientAvatar invoice={r.inv} size="md" />
+          <span className="min-w-0 flex-1 truncate font-semibold text-ink">{r.inv.client}</span>
+          <span className={`tabular font-semibold ${r.balance ? 'text-ink' : 'text-green-ink'}`}>{r.balance ? usd(r.balance) : 'Settled'}</span>
+        </li>
+      ))}
+    </ul>
   );
 }
 
@@ -204,31 +146,19 @@ function ReportPanel() {
     { label: 'Q4', v: 92 },
   ];
   return (
-    <div className="flex flex-1 flex-col gap-4">
-      <div className="flex items-center justify-between">
-        <span className="text-[14px] font-semibold text-ink">Collected by quarter</span>
-        <span className="rounded-full border border-line px-2.5 py-1 text-[11.5px] font-semibold text-ink-soft">Export PDF</span>
-      </div>
+    <div className="flex flex-1 flex-col">
+      <PanelHeader title="Collected by quarter" />
       <div className="flex min-h-28 flex-1 items-end gap-3">
         {q.map((x, i) => (
           <div key={x.label} className="flex h-full flex-1 flex-col items-center justify-end gap-1.5">
             <span className={`w-full max-w-11 rounded-t-[8px] ${i === q.length - 1 ? 'bg-green' : 'bg-ink/10'}`} style={{ height: `${x.v}%` }} />
-            <span className="text-[11px] font-semibold text-muted">{x.label}</span>
+            <span className="text-[11.5px] font-semibold text-muted">{x.label}</span>
           </div>
         ))}
       </div>
-      <dl className="grid grid-cols-3 gap-3 border-t border-line pt-3 text-[11px]">
-        {[
-          ['Avg. days to pay', '9.2'],
-          ['Collected', '96%'],
-          ['Written off', '0%'],
-        ].map(([k, v]) => (
-          <div key={k}>
-            <dt className="text-muted">{k}</dt>
-            <dd className="tabular text-[16px] font-bold text-ink">{v}</dd>
-          </div>
-        ))}
-      </dl>
+      <p className="mt-4 text-[12.5px] text-muted">
+        Clients pay in <span className="tabular font-semibold text-ink">9.2 days</span> on average
+      </p>
     </div>
   );
 }
