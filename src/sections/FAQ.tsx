@@ -11,7 +11,7 @@ export function FAQ() {
     <section id="faq" aria-labelledby="faq-title" className="bg-paper py-20 sm:py-28">
       <Container className="grid gap-12 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] lg:gap-20">
         <div className="flex flex-col gap-8 lg:sticky lg:top-28 lg:self-start">
-          <SectionHeading id="faq-title" eyebrow="FAQ" title="Questions? We've got answers." />
+          <SectionHeading id="faq-title" title="Questions? We've got answers." />
           <Reveal className="flex items-start gap-4 rounded-[var(--radius-xl)] border border-line bg-white p-5">
             <span className="grid size-10 shrink-0 place-items-center rounded-full bg-green-wash text-green-ink">
               <MessageCircle className="size-5" strokeWidth={2} aria-hidden="true" />

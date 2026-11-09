@@ -58,7 +58,7 @@ export function Pricing() {
     <section id="pricing" aria-labelledby="pricing-title" className="bg-white py-20 sm:py-28">
       <Container>
         <div className="flex flex-col items-center gap-8">
-          <SectionHeading id="pricing-title" align="center" eyebrow="Pricing" title="Simple pricing. No surprises." lede="Start free and upgrade as your business grows." />
+          <SectionHeading id="pricing-title" align="center" title="Simple pricing. No surprises." lede="Start free and upgrade as your business grows." />
           <div className="flex flex-col items-center gap-2">
             <BillingToggle yearly={yearly} onChange={setYearly} />
             <p className="text-[13px] text-muted" aria-live="polite">

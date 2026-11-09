@@ -63,6 +63,16 @@
   p {
     text-wrap: pretty;
   }
+  /* Tailwind's preflight resets buttons to the default cursor; anything clickable shows a hand. */
+  button:not(:disabled),
+  [role='button'],
+  [role='tab'],
+  [role='radio'],
+  summary,
+  label[for],
+  select {
+    cursor: pointer;
+  }
   :focus-visible {
     outline: 2px solid var(--color-green-ink);
     outline-offset: 3px;

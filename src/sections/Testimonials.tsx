@@ -9,7 +9,7 @@ export function Testimonials() {
     <section aria-labelledby="testimonials-title" className="bg-paper py-20 sm:py-28">
       <Container>
         <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
-          <SectionHeading id="testimonials-title" eyebrow="Stories" title="Less admin. More time for what matters." />
+          <SectionHeading id="testimonials-title" title="Less admin. More time for what matters." />
         </div>
         <div className="mt-12 grid gap-4 lg:grid-cols-[minmax(0,1.25fr)_minmax(0,1fr)] lg:gap-5">
           <TestimonialCard {...lead} featured />

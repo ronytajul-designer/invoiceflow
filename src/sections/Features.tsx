@@ -185,10 +185,6 @@ export function Features() {
     <section id="features" aria-labelledby="features-title" className="bg-white py-20 sm:py-28">
       <Container>
         <Reveal className="mx-auto flex max-w-[720px] flex-col items-center gap-5 text-center">
-          <p className="inline-flex items-center gap-2 rounded-full bg-green-wash py-1.5 pr-3.5 pl-2 text-[13px] font-semibold text-green-ink">
-            <span className="size-2 rounded-full bg-green" aria-hidden="true" />
-            Features
-          </p>
           <h2 id="features-title" className="text-[34px] leading-[1.08] font-bold tracking-[-0.035em] text-ink sm:text-[46px] lg:text-[54px]">
             Everything you need to stay on top of your invoices.
           </h2>

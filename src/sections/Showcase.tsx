@@ -38,7 +38,6 @@ export function Showcase() {
         <SectionHeading
           id="showcase-title"
           tone="dark"
-          eyebrow="Product"
           title="Your entire invoicing workflow. One clear view."
           lede="Stop switching between spreadsheets, emails, and payment records. Keep everything organized in one place."
         />
