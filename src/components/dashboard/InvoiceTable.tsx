@@ -1,37 +1,61 @@
-import northwind from '../../assets/avatars/northwind.webp';
-import halcyon from '../../assets/avatars/halcyon.webp';
-import brightline from '../../assets/avatars/brightline.webp';
-import fernwood from '../../assets/avatars/fernwood.webp';
-import atlas from '../../assets/avatars/atlas.webp';
-import kestrel from '../../assets/avatars/kestrel.webp';
 import { invoices, usd, type Invoice } from '../../data/dashboard';
 import { StatusBadge } from '../ui/StatusBadge';
 
 
 /**
- * Headshot of each client's contact (Unsplash photos, Unsplash License).
- * Same square crop, size and colour grade for consistency. Sample data.
+ * Logos for the fictional clients. Each is a distinct mark in its own colour
+ * on one shared tile (white, hairline ring, same size and inner padding), so
+ * they read like real company logos while staying a consistent set.
  */
-const photos: Record<string, string> = {
-  'Northwind Studio': northwind,
-  'Halcyon & Co.': halcyon,
-  'Brightline Consulting': brightline,
-  'Fernwood Bakery': fernwood,
-  'Atlas Field Labs': atlas,
-  'Kestrel Media': kestrel,
+export const logos: Record<string, JSX.Element> = {
+  // Two wind strokes curling into a gust.
+  'Northwind Studio': (
+    <g fill="none" stroke="#142746" strokeWidth="2.8" strokeLinecap="round">
+      <path d="M3 9h11a3.2 3.2 0 1 0-3.2-3.2" />
+      <path d="M3 15h15a3.2 3.2 0 1 1-3.2 3.2" />
+    </g>
+  ),
+  // Kingfisher: a solid bird with swept wings.
+  'Halcyon & Co.': <path d="M2 10c4-3 7-2 10 2 3-4 6-5 10-2-3 1-5 3-6 6-1.3 2.5-6.7 2.5-8 0-1-3-3-5-6-6Z" fill="#2F5BD3" />,
+  // Sun rising over a horizon line.
+  'Brightline Consulting': (
+    <g fill="#237A57">
+      <path d="M6 16a6 6 0 0 1 12 0Z" />
+      <rect x="2" y="18" width="20" height="2.6" rx="1.3" />
+    </g>
+  ),
+  // Leaf with a central vein cut out.
+  'Fernwood Bakery': (
+    <g>
+      <path d="M12 2c6 4 8 10 0 20-8-10-6-16 0-20Z" fill="#B4540A" />
+      <path d="M12 7v12" stroke="#fff" strokeWidth="1.6" strokeLinecap="round" />
+    </g>
+  ),
+  // Solid globe with white meridians.
+  'Atlas Field Labs': (
+    <g>
+      <circle cx="12" cy="12" r="10" fill="#3D6B8F" />
+      <path d="M2 12h20M12 2c3.5 3.5 3.5 16.5 0 20M12 2c-3.5 3.5-3.5 16.5 0 20" fill="none" stroke="#fff" strokeWidth="1.5" />
+    </g>
+  ),
+  // Swept falcon wing.
+  'Kestrel Media': <path d="M2 19c6-1 10-6 20-15-1 9-6 14-13 15l3-4-10 4Z" fill="#2FA678" />,
 };
 
 export function ClientAvatar({ invoice, size = 'sm' }: { invoice: Invoice; size?: 'sm' | 'md' }) {
-  const box = size === 'sm' ? 'size-6' : 'size-8';
-  const src = photos[invoice.client];
-  if (!src) {
-    return (
-      <span className={`grid shrink-0 place-items-center rounded-full bg-ink text-[10px] font-bold text-white ${box}`} aria-hidden="true">
-        {invoice.initials}
-      </span>
-    );
-  }
-  return <img src={src} alt="" width={32} height={32} loading="lazy" decoding="async" className={`shrink-0 rounded-full object-cover ring-2 ring-white ${box}`} />;
+  const logo = logos[invoice.client];
+  const box = size === 'sm' ? 'size-6 rounded-[7px]' : 'size-8 rounded-[9px]';
+  return (
+    <span className={`grid shrink-0 place-items-center bg-white ring-1 ring-ink/10 ${box}`} aria-hidden="true">
+      {logo ? (
+        <svg viewBox="0 0 24 24" className={size === 'sm' ? 'size-4' : 'size-[22px]'}>
+          {logo}
+        </svg>
+      ) : (
+        <span className="text-[10px] font-bold text-ink">{invoice.initials}</span>
+      )}
+    </span>
+  );
 }
 
 /** Compact invoice list used inside dashboard mockups. Collapses columns by container width. */

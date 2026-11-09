@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react';
 import { Container } from '../components/ui/Container';
 import { Reveal } from '../components/ui/Reveal';
+import { logos } from '../components/dashboard/InvoiceTable';
 
 type Mark = { name: string; glyph: ReactNode; cls: string };
 
@@ -15,12 +16,21 @@ const marks: Mark[] = [
   { name: 'Lumen', glyph: <path d="M8 1a7 7 0 1 0 0 14A5 5 0 0 1 8 1Z" />, cls: 'font-bold tracking-[-0.01em]' },
 ];
 
+/** Strip names that share a logo with the dashboard clients. */
+const logoFor: Record<string, string> = {"Northwind": "Northwind Studio", "Halcyon & Co.": "Halcyon & Co.", "BRIGHTLINE": "Brightline Consulting", "fernwood": "Fernwood Bakery", "Atlas Field": "Atlas Field Labs", "Kestrel": "Kestrel Media"};
+
 function Wordmark({ m }: { m: Mark }) {
   return (
     <span className="flex shrink-0 items-center gap-2.5 text-ink/40 transition-colors duration-300 hover:text-ink/75">
-      <svg viewBox="0 0 16 16" className="size-[18px] shrink-0 sm:size-5" fill="currentColor" aria-hidden="true">
-        {m.glyph}
-      </svg>
+      {logoFor[m.name] ? (
+        <svg viewBox="0 0 24 24" className="size-[22px] shrink-0 grayscale" aria-hidden="true">
+          {logos[logoFor[m.name]]}
+        </svg>
+      ) : (
+        <svg viewBox="0 0 16 16" className="size-[18px] shrink-0 sm:size-5" fill="currentColor" aria-hidden="true">
+          {m.glyph}
+        </svg>
+      )}
       <span className={`text-[18px] whitespace-nowrap sm:text-[20px] ${m.cls}`}>{m.name}</span>
     </span>
   );
